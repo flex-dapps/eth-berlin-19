@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
+  import { onMount } from "svelte";
 
   export let size = 50;
   const rand = (x = 2) => {
@@ -12,7 +12,6 @@
     colours: ["#5d526d", "#7dac7d", "#b3e876", "#fff66d", "#fff66d"],
     images: [
       "../../../img/wallpaper_04.jpg",
-      "../../../img/wallpaper_05.jpg",
       "../../../img/wallpaper_03.png",
       "../../../img/wallpaper_02.gif",
       "../../../img/wallpaper_01.gif"
@@ -25,6 +24,30 @@
 </script>
 
 <style>
+
+@keyframes rumble {
+    0% {
+        transform: rotate(0deg);
+        
+        transform-origin: bottom ;
+    }
+    33% {
+        transform: rotate(2deg);
+        transform-origin: bottom right;
+    }
+    66% {
+        transform: rotate(0deg);
+        transform-origin: bottom left;
+    }
+    100% {
+        transform: rotate(-2deg);
+        transform-origin: left;
+    }
+}
+
+.container {
+    animation: rumble .2s infinite;
+}
   #machine {
     border: 1px solid #00000050;
     border-radius: 0.5rem;
@@ -37,6 +60,8 @@
     background: #ffc555;
     height: 20%;
     border-bottom: 0.2rem solid #00000020;
+
+    background-position: 0 0 ;
     background-blend-mode: soft-light;
   }
 
@@ -77,6 +102,7 @@
     background: #ffc555;
     border: 0.1rem solid #00000020;
     width: 62%;
+    background-position: 0 0 ;
     background-blend-mode: soft-light;
     height: 50%;
   }

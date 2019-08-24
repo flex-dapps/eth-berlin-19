@@ -35,7 +35,7 @@
     border-radius: 0.5rem;
   }
 
-  #screen {
+  #background {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -66,7 +66,7 @@
   }
 </style>
 
-<div id="screen" class="flex flex-column justify-between items-center">
+<div id="background" class="flex flex-column justify-between items-center">
   <div class="title">
     <h1>SUDZ</h1>
     <h5>

@@ -12,12 +12,14 @@ const db = low(adapter)
 db.defaults({ dirtyWallet: {}, cleanWallet: {} }).write()
 
 let address = writable()
+let balance = writable()
 
 export default {
   addBounty,
   claimBounty,
   init,
-  address
+  address,
+  balance
 }
 
 let tornadoAddress
@@ -25,29 +27,28 @@ let proxyAddress
 let web3
 let provider
 
-export function init(_tornadoAddress, _proxyAddress) {
-  // tornadoAddress = _tornadoAddress
-  // proxyAddress = _proxyAddress
-  // provider = new ethers.getDefaultProvider()
-  // const dirtyWallet = generateDirtyWallet()
-  // address.set(dirtyWallet.address)
-  // console.log(dirtyWallet.address)
-  // dirtyWallet.connect(provider)
-  // const web3 = new Web3(new ProviderBridge(provider, dirtyWallet))
-  // generateCleanWallet()
-  // window.tornado.init(web3)
+export async function init(_tornadoAddress, _proxyAddress) {
+  tornadoAddress = _tornadoAddress
+  proxyAddress = _proxyAddress
+  provider = new ethers.getDefaultProvider('kovan')
+  let dirtyWallet = getDirtyWallet(provider)
+  let cleanWallet = getCleanWallet(provider)
+  address.set(dirtyWallet.address)
+  balance.set(await dirtyWallet.getBalance())
+  const web3 = new Web3(new ProviderBridge(provider, dirtyWallet))
+  window.tornado.init(web3)
 }
 
 export async function deposit() {
-  // const { commitment, note } = window.tornado.deposit()
-  // // call deposit on mixer with commitment as param 1 (with 0.1 eth)
-  // const contract = new ethers.Contract(
-  //   tornadoAddress,
-  //   tornadoDetails.abi,
-  //   provider
-  // )
-  // contract.connect(wallet)
-  // contract.deposit(commitment, { value: ethers.utils.parseEther('0.1') })
+  const { commitment, note } = window.tornado.deposit()
+  // call deposit on mixer with commitment as param 1 (with 0.1 eth)
+  const contract = new ethers.Contract(
+    tornadoAddress,
+    tornadoDetails.abi,
+    provider
+  )
+  contract.connect(wallet)
+  contract.deposit(commitment, { value: ethers.utils.parseEther('0.1') })
 }
 
 export async function hasEnoughEth() {
@@ -72,14 +73,28 @@ export function claimBounty() {
   // proxy.withdraw(note)
 }
 
-export function generateDirtyWallet() {
-  const wallet = new ethers.Wallet.createRandom()
-  db.set('dirtyWallet', wallet).write()
-  return wallet
+function getDirtyWallet(provider) {
+  let w = localStorage.getItem('dirty-wallet')
+  if (w) {
+    w = new ethers.Wallet(JSON.parse(w).signingKey.privateKey, provider)
+  } else {
+    w = ethers.Wallet.createRandom()
+    localStorage.setItem('dirty-wallet', JSON.stringify(w))
+    w = w.connect(provider)
+  }
+  db.set('dirtyWallet', w).write()
+  return w
 }
 
-export function generateCleanWallet() {
-  const wallet = new ethers.Wallet.createRandom()
-  db.set('cleanWallet', wallet).write()
-  return wallet
+function getCleanWallet(provider) {
+  let w = localStorage.getItem('clean-wallet')
+  if (w) {
+    w = new ethers.Wallet(JSON.parse(w).signingKey.privateKey, provider)
+  } else {
+    w = ethers.Wallet.createRandom()
+    localStorage.setItem('clean-wallet', JSON.stringify(w))
+    w = w.connect(provider)
+  }
+  db.set('cleanWallet', w).write()
+  return w
 }

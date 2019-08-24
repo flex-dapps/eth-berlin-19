@@ -2,12 +2,12 @@
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
 
-  export let size;
+  export let size = 50;
 </script>
 
 <style>
   #machine {
-    border: 1px solid #00000020;
+    border: 1px solid #00000050;
     border-radius: 0.5rem;
     background: whitesmoke;
     box-shadow: 0 15px 10px 0px #00000030, inset 0 -0.5rem 1em 1em #00000010;

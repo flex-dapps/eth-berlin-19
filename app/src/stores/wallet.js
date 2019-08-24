@@ -76,9 +76,7 @@ export async function deposit() {
   const tx = await actualContract.deposit(commitment, {
     value: ethers.utils.parseEther('0.1')
   })
-  console.log({ tx })
-  await tx.wait()
-  console.log({ tx })
+  return tx
 }
 
 export async function withdrawAll() {

@@ -27,6 +27,7 @@
   export let withdraw;
   export let commitment;
   let withdrawing;
+  let tx;
 </script>
 
 <style>
@@ -165,7 +166,8 @@
 
   <div
     id="machine"
-    class="flex flex-column w-100 h-100 justify-between items-center {withdrawing ? 'rumble' : ''}">
+    class="flex flex-column w-100 h-100 justify-between items-center"
+    class:rumble={tx}>
     {#if background}
       <div
         style={background.length > 9 ? `background: url('${background}'), lightgrey;` : `background: ${background};`}
@@ -197,16 +199,20 @@
         class="flex items-center justify-center">
         <div class="flex items-center justify-center">
           <div
-            on:click={() => {
+            on:click={async () => {
               if (commitment) {
                 withdrawing = true;
                 withdraw();
               } else {
-                deposit();
+                tx = true;
+                tx = await deposit();
+                await tx.wait();
+                tx = null;
               }
             }}
-            class="{commitment ? 'munny' : ''} flex items-center justify-center">
-            {#if commitment}💸{:else}🧼{/if}
+            class="{commitment && tx ? 'munny' : ''} flex items-center
+            justify-center f2">
+            {#if commitment && !tx}💰{:else if tx}💸{:else}🧼{/if}
           </div>
         </div>
       </div>

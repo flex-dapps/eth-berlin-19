@@ -1,13 +1,15 @@
 <script>
-  import { onMount } from 'svelte';
-  import { fade, slide, crossfade } from 'svelte/transition'
+  import { onMount } from "svelte";
+  import { fade, slide, crossfade } from "svelte/transition";
   import WashingMachine from "../WashingMachine";
 
+  export let commitments;
+  export let deposit;
+  export let withdraw;
 </script>
 
 <style>
-
-  section::after{
+  section::after {
     content: "";
     background: url("../../../img/wallpaper_03.png");
     background-size: 100% 70%;
@@ -27,21 +29,21 @@
     z-index: 1;
   }
 
-  .html { 
-    overflow-y: scroll; 
+  .html {
+    overflow-y: scroll;
   }
 
   .title {
     color: #ffc555;
     -webkit-text-stroke: #eb5757 0.2rem;
   }
-  
-  .body { 
+
+  .body {
     position: absolute;
     width: 100%;
     height: 100%;
     opacity: 1;
-    z-index: 3; 
+    z-index: 3;
   }
 
   .heading {
@@ -60,7 +62,6 @@
     flex-wrap: wrap;
     flex-basis: 50%;
   }
-
 </style>
 
 <div class="body html flex flex-column w-100 h-100" in:fade>
@@ -70,9 +71,11 @@
   <div class="grid flex flex-row w-100">
     {#each Array(10) as washer, i}
       <div class="washer flex flex-row">
-        <a href='/'>
-          <WashingMachine size={30} />      
-        </a>
+        <WashingMachine
+          size={30}
+          commitment={commitments && commitments[i] ? commitments[i] : null}
+          {deposit}
+          {withdraw} />
       </div>
     {/each}
   </div>
@@ -81,5 +84,4 @@
 <section
   id="wallpaper"
   class="flex flex-column justify-end w-100 h-100"
-  in:fade>
-</section>
+  in:fade />

@@ -76,9 +76,7 @@ export async function deposit() {
   const tx = await actualContract.deposit(commitment, {
     value: ethers.utils.parseEther('0.1')
   })
-  console.log({ tx })
-  await tx.wait()
-  console.log({ tx })
+  return tx
 }
 
 export async function withdrawAll() {
@@ -87,8 +85,8 @@ export async function withdrawAll() {
   for (let note of notes) {
     try {
       txs.push(await withdraw(note))
-    } catch (error) {
-      console.log(`failed to withdraw note ${note}`);
+    } catch (e) {
+      console.log(`failed to withdraw note ${note}`)
     }
   }
   console.log(txs)

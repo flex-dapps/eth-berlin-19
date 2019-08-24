@@ -7,12 +7,41 @@
 
 <style>
 
+  section::after{
+    content: "";
+    background: url("../../../img/wallpaper_03.png");
+    background-size: 100% 70%;
+    background-repeat: round;
+    opacity: 0.1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  #wallpaper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
   .html { 
     overflow-y: scroll; 
   }
+
+  .title {
+    color: #ffc555;
+    -webkit-text-stroke: #eb5757 0.2rem;
+  }
   
   .body { 
-    position: absolute; 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    z-index: 3; 
   }
 
   .heading {
@@ -36,7 +65,7 @@
 
 <div class="body html flex flex-column w-100 h-100" in:fade>
   <div class="heading flex flex-row w-100 h-33">
-    <h1 class="w-50">My Loads</h1>
+    <h1 class="title w-50">My Loads</h1>
   </div>
   <div class="grid flex flex-row w-100">
     {#each Array(10) as washer, i}
@@ -48,3 +77,9 @@
     {/each}
   </div>
 </div>
+
+<section
+  id="wallpaper"
+  class="flex flex-column justify-end w-100 h-100"
+  in:fade>
+</section>

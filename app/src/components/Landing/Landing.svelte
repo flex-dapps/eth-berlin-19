@@ -57,7 +57,7 @@
 
   h1 {
     color: #ffc555;
-    -webkit-text-stroke: #eb5757 0.1rem;
+    -webkit-text-stroke: #eb5757 0.2rem;
     font-size: 4rem;
     margin: 0.5rem;
   }
@@ -81,7 +81,7 @@
 
   <div class="pa3">
     <div class="flex justify-center items-end mb5 pr5">
-      <img class="w-50 pb4" id="plant" src="../../../img/plant_02.png" />
+      <img class="w-50 pb4" id="plant" src="../../../img/plant_02.png" alt='plant' />
       <div class="z2 washer flex justify-center items-end">
         <WashingMachine size={45} />
       </div>

@@ -3,9 +3,16 @@
   import { fade, slide, crossfade } from "svelte/transition";
   import WashingMachine from "../WashingMachine";
 
+  import ethers from 'ethers';
+
   export let commitments;
   export let deposit;
   export let withdraw;
+  export let balance = 0;
+  export let cleanBalance = 0;
+
+
+  console.log('blah', balance)
 </script>
 
 <style>
@@ -38,6 +45,12 @@
     -webkit-text-stroke: #eb5757 0.2rem;
   }
 
+  .subHead {
+    margin-left: 1rem;
+    font-family: "VT323", monospace;
+    color: #000;
+  }
+
   .body {
     position: absolute;
     width: 100%;
@@ -66,7 +79,11 @@
 
 <div class="body html flex flex-column w-100 h-100" in:fade>
   <div class="heading flex flex-row w-100 h-33">
-    <h1 class="title w-50">My Loads</h1>
+    <div class="flex flex-column w-50">
+      <h4 class="subHead w-100">Dirty Coins: {ethers.utils.formatEther(balance)}</h4>
+      <h4 class="subHead w-100">Clean Coins: {ethers.utils.formatEther(cleanBalance)}</h4>
+    </div>
+    <h1 class="title">My Loads 💦</h1>
   </div>
   <div class="grid flex flex-row w-100">
     {#each Array(10) as washer, i}

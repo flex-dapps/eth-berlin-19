@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   // import { RammettoOne } from '../public/RammettoOne-Regular.ttf'
 
-  import { Landing, Home, MyLoads } from "./components";
+  import { Landing, MyLoads } from "./components";
 
   onMount(async () => {
     wallet.init(
@@ -42,6 +42,9 @@
 
 <style>
   :global(h1) {
+    font-family: "Rammetto One", cursive;
+  }
+  :global(h2) {
     font-family: "Rammetto One", cursive;
   }
 </style>

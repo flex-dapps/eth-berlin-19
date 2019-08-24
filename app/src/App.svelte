@@ -12,12 +12,16 @@
     );
     address = wallet.address;
     balance = wallet.balance;
+    cleanAddress = wallet.cleanAddress;
+    cleanBalance = wallet.cleanBalance;
     console.log({ address });
   });
 
   export let wallet;
   let address = writable();
   let balance = writable();
+  let cleanAddress = writable();
+  let cleanBalance = writable();
 
   function addBounty() {
     wallet.addBounty();
@@ -43,6 +47,8 @@
   <div id="screen" class="h-100 w-100 overflow-hidden">
     <div>{$address}</div>
     <div>{$balance}</div>
+    <div>{$cleanAddress}</div>
+    <div>{$cleanBalance}</div>
     <button on:click={deposit}>Deposit</button>
     <Router>
       <Route path="home">

@@ -1,5 +1,6 @@
 require('dotenv').config()
 const app = require('express')()
+const cors = require('cors')
 const ethers = require('ethers')
 const jsonParser = require('body-parser').json()
 
@@ -9,13 +10,14 @@ const tornadoDetails = require('./lib/tornado.json')
 
 const provider = ethers.getDefaultProvider(NETWORK || 'homestead')
 
-const wallet = new ethers.Wallet(PRIVATE_KEY)
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider)
 
 const { abi } = tornadoDetails
 const tornadoAddress = tornadoDetails.address[NETWORK]
-const contract = new ethers.Contract(tornadoAddress, abi, provider)
-contract.connect(wallet)
+const c = new ethers.Contract(tornadoAddress, abi, provider)
+const contract = c.connect(wallet)
 
+app.use(cors())
 app.use(jsonParser)
 app.post('/relay', async (req, res, next) => {
   const { a, b, c, input } = req.body

@@ -20,7 +20,8 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "sirv-cli": "^0.4.4",
-    "svelte-routing": "^1.3.0"
+    "svelte-routing": "^1.3.0",
+    "web3": "^1.0.0-beta.37"
   },
   "scripts": {
     "build": "rollup -c",

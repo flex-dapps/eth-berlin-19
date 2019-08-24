@@ -9,15 +9,20 @@
       "0x1Cea940cA15a303A0E01B7F8589F39fF34308DB2", // tornado
       "0xc8f51a8ade617c4930f558b19b9491d525d01f13" // proxy
     );
+    address = wallet;
   });
 
   export let wallet;
+  let address;
 
   function addBounty() {
     wallet.addBounty();
   }
   function claimBounty() {
     wallet.claimBounty();
+  }
+  function deposit() {
+    wallet.deposit();
   }
 </script>
 
@@ -35,6 +40,8 @@
 
 <div id="app" class="flex h-100 flex-column justify-start relative">
   <div id="screen" class="h-100 w-100 overflow-hidden">
+    <div>{$address}</div>
+    <button on:click={deposit}>Deposit</button>
     <Router>
       <Route path="home">
         <Home />

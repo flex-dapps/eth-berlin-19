@@ -39,13 +39,14 @@
   }
 
   .checkLoads {
-    background: #2da2b0;
+    background: #ffc555;
     border-radius: 0.2rem;
     font-family: "VT323", monospace;
     font-size: 1.5rem;
     align-self: right;
-    color: #fff;
+    color: #eb5757;
     margin-left: 8rem;
+    border: 2px solid #eb5757;
   }
   
   .title {
@@ -92,7 +93,7 @@
       <br />
       Laundry Simulator
     </h5>
-    <button class="checkLoads">check loads</button>
+    <button on:click='/myloads' class="checkLoads">check loads 💦</button>
   </div>
 
   <div class="pa3">

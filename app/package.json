@@ -17,11 +17,13 @@
     "crypto": "^1.0.1",
     "ethers": "^4.0.36",
     "lowdb": "^1.0.0",
-    "svelte-routing": "^1.3.0",
+    "rollup-plugin-ignore": "^1.0.5",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
     "sirv-cli": "^0.4.4",
     "snarkjs": "^0.1.16",
-    "web3": "^1.2.1",
-    "websnark": "0.0.5"
+    "svelte-routing": "^1.3.0",
+    "websnark": "git+https://github.com/peppersec/websnark.git#ed6a4d8a6fb081a62af26820980046bbb602d559"
   },
   "scripts": {
     "build": "rollup -c",

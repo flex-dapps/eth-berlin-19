@@ -27,9 +27,6 @@
 </script>
 
 <style>
-  :global(body) {
-    font-family: "Arial";
-  }
 </style>
 
 <svelte:head>

@@ -33,6 +33,9 @@
   .start {
     background: #2da2b0;
     border-radius: 0.5rem;
+    font-family: "VT323", monospace;
+    font-size: 2rem;
+    color: #fff;
   }
 
   #screen {

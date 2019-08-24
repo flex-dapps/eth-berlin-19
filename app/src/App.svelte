@@ -49,11 +49,11 @@
 </svelte:head>
 <div id="app" class="flex h-100 flex-column justify-start relative">
   <div id="screen" class="h-100 w-100 overflow-hidden">
-    <div>{$address}</div>
+    <!-- <div>{$address}</div>
     <div>{$balance}</div>
     <div>{$cleanAddress}</div>
-    <div>{$cleanBalance}</div>
-    <button on:click={deposit}>Deposit</button>
+    <div>{$cleanBalance}</div> -->
+    <!-- <button on:click={deposit}>Deposit</button> -->
     <Router>
       <Route path="home">
         <Home />

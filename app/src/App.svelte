@@ -55,9 +55,6 @@
 <div id="app" class="flex h-100 flex-column justify-start relative">
   <div id="screen" class="h-100 w-100 overflow-hidden">
     <Router>
-      <Route path="home">
-        <Home />
-      </Route>
       <Route path="myloads">
         <MyLoads
           address={$address}

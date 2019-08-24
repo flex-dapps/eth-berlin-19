@@ -88,7 +88,7 @@ export async function withdrawAll() {
     try {
       txs.push(await withdraw(note))
     } catch (e) {
-      console.error(e)
+      console.log(`failed to withdraw note ${note}`)
     }
   }
   console.log(txs)

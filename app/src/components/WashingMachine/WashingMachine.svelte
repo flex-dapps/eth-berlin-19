@@ -74,11 +74,27 @@
     border-radius: 100rem;
     background: lightcyan;
   }
+
+  #extras {
+    height: 4rem;
+    margin-bottom: -5px;
+    z-index: 3;
+  }
+
+  #extras img {
+    position: relative;
+    height: 100%;
+  }
 </style>
 
 <div
   class="container"
   style="{`width: ${size}vw; height: ${size * 1.2}vw;`}in:fade">
+  <div class="w-100 flex justify-around items-start;" id="extras">
+    <img src="../../../img/laundry_01.png" />
+    <img src="../../../img/laundry_02.png" />
+    <img src="../../../img/plant_01.png" />
+  </div>
   <div
     id="machine"
     class="flex flex-column w-100 h-100 justify-between items-center">

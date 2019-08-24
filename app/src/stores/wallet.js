@@ -26,28 +26,28 @@ let web3
 let provider
 
 export function init(_tornadoAddress, _proxyAddress) {
-  tornadoAddress = _tornadoAddress
-  proxyAddress = _proxyAddress
-  provider = new ethers.getDefaultProvider()
-  const dirtyWallet = generateDirtyWallet()
-  address.set(dirtyWallet.address)
-  console.log(dirtyWallet.address)
-  dirtyWallet.connect(provider)
-  const web3 = new Web3(new ProviderBridge(provider, dirtyWallet))
-  generateCleanWallet()
-  window.tornado.init(web3)
+  // tornadoAddress = _tornadoAddress
+  // proxyAddress = _proxyAddress
+  // provider = new ethers.getDefaultProvider()
+  // const dirtyWallet = generateDirtyWallet()
+  // address.set(dirtyWallet.address)
+  // console.log(dirtyWallet.address)
+  // dirtyWallet.connect(provider)
+  // const web3 = new Web3(new ProviderBridge(provider, dirtyWallet))
+  // generateCleanWallet()
+  // window.tornado.init(web3)
 }
 
 export async function deposit() {
-  const { commitment, note } = window.tornado.deposit()
-  // call deposit on mixer with commitment as param 1 (with 0.1 eth)
-  const contract = new ethers.Contract(
-    tornadoAddress,
-    tornadoDetails.abi,
-    provider
-  )
-  contract.connect(wallet)
-  contract.deposit(commitment, { value: ethers.utils.parseEther('0.1') })
+  // const { commitment, note } = window.tornado.deposit()
+  // // call deposit on mixer with commitment as param 1 (with 0.1 eth)
+  // const contract = new ethers.Contract(
+  //   tornadoAddress,
+  //   tornadoDetails.abi,
+  //   provider
+  // )
+  // contract.connect(wallet)
+  // contract.deposit(commitment, { value: ethers.utils.parseEther('0.1') })
 }
 
 export async function hasEnoughEth() {

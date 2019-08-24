@@ -12,19 +12,15 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "assert": "^2.0.0",
-    "circomlib": "0.0.12",
-    "crypto": "^1.0.1",
     "ethers": "^4.0.36",
     "ethers-web3-bridge": "^0.0.1",
     "lowdb": "^1.0.0",
     "rollup-plugin-ignore": "^1.0.5",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
     "sirv-cli": "^0.4.4",
-    "snarkjs": "^0.1.16",
-    "svelte-routing": "^1.3.0",
-    "websnark": "git+https://github.com/peppersec/websnark.git#ed6a4d8a6fb081a62af26820980046bbb602d559"
+    "svelte-routing": "^1.3.0"
   },
   "scripts": {
     "build": "rollup -c",

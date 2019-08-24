@@ -61,9 +61,6 @@
     <button on:click={deposit}>Deposit</button>
     <button on:click={withdraw}>Withdraw</button>
     <Router>
-      <Route path="home">
-        <Home />
-      </Route>
       <Route path="myloads">
         <MyLoads />
       </Route>

@@ -15,6 +15,7 @@
   export let cleanBalance;
 
   let addressModal = false;
+  let copied = false
 
   let qrCode = writable();
 
@@ -122,11 +123,17 @@
         <img
           src={$qrCode}
           alt="qr"
-          class="w-50"
+          class="w-75"
           on:click={() => {
             copy(address);
+            copied = true
           }} />
         <div class="pa2">Send ETH here, tap QR to copy address</div>
+        {#if copied}
+        <div class='pa2 f3'>Copied to clipboard 👍</div>
+    
+        {/if}
+
       </div>
       <div class="pa3 close-modal" on:click={() => (addressModal = false)}>
         Back to the suds

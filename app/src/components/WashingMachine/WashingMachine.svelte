@@ -20,8 +20,10 @@
   };
 
   let backgroundType = backgrounds[Object.keys(backgrounds)[rand(1)]];
+  console.log(backgroundType)
   let background =
     backgroundType[Math.floor(Math.random() * Object.keys(backgrounds).length)];
+console.log(background)
 
   export let deposit;
   export let withdraw;
@@ -40,7 +42,6 @@
 
   #panel {
     border-radius: 0.2rem 0.4rem 0 0;
-    background: #ffc555;
     height: 20%;
     border-bottom: 0.2rem solid #00000020;
     background-blend-mode: soft-light;
@@ -80,7 +81,6 @@
 
   #door {
     border-radius: 100rem;
-    background: #ffc555;
     border: 0.1rem solid #00000020;
     width: 62%;
     background-blend-mode: soft-light;
@@ -180,9 +180,9 @@
     class="flex flex-column w-100 h-100 justify-between items-center">
     {#if background}
       <div
-        style={background.length > 9 ? `background: url('${background}'), lightgrey;` : `background: ${background};`}
         id="panel"
-        class="w-100 flex justify-around items-center">
+        class="w-100 flex justify-around items-center"
+        style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}>
         <div class="flex items-center justify-between w-25 h-100">
           <div id="dial" class="flex justify-center items-center">
             <div />
@@ -204,7 +204,7 @@
         </div>
       </div>
       <div
-        style={background.length > 9 ? `background: url('${background}'), lightgrey;` : `background: ${background};`}
+        style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}
         id="door"
         class="flex items-center justify-center">
         <div class="flex items-center justify-center">

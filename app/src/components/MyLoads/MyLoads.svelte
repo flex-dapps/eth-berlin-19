@@ -75,9 +75,13 @@
     flex-wrap: wrap;
     flex-basis: 50%;
   }
+
+  .withdraw {
+    background: lightgreen;
+  }
 </style>
 
-<div class="body html flex flex-column w-100 h-100" in:fade>
+<div class="body html flex flex-column items-center w-100 h-100" in:fade>
   <div class="heading flex flex-row w-100 h-33">
     <div class="flex flex-column w-50">
       <h4 class="subHead w-100">Dirty Coins: {ethers.utils.formatEther(balance)}</h4>
@@ -96,6 +100,7 @@
       </div>
     {/each}
   </div>
+  <div class="fixed bottom-2 pa3 br3 withdraw">Withdraw All</div>
 </div>
 
 <section

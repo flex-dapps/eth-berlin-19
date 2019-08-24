@@ -117,7 +117,7 @@
     animation: spin 2s infinite linear;
   }
   .rumble {
-    animation: rumbling 0.1s infinite linear;
+    animation: rumbling 0.2s infinite;
   }
 
   @keyframes spin {
@@ -130,18 +130,29 @@
   }
 
   @keyframes rumbling {
-    from {
-      transform: rotateZ(5deg);
+    0% {
+      transform: rotate(0deg);
+
+      transform-origin: bottom;
     }
-    to {
-      transform: rotateZ(-5deg);
+    33% {
+      transform: rotate(2deg);
+      transform-origin: bottom right;
+    }
+    66% {
+      transform: rotate(0deg);
+      transform-origin: bottom left;
+    }
+    100% {
+      transform: rotate(-2deg);
+      transform-origin: left;
     }
   }
 </style>
 
 <!-- Make responsive -->
 <div
-  class="container"
+  class:rumble={tx}
   style="{`width: ${size}vw; height: ${size * 1.2}vw;`}in:fade">
   <div
     class={`w-100 flex justify-around items-start; ${plants == 2 ? 'flex-row-reverse' : ''}`}
@@ -166,8 +177,7 @@
 
   <div
     id="machine"
-    class="flex flex-column w-100 h-100 justify-between items-center"
-    class:rumble={tx}>
+    class="flex flex-column w-100 h-100 justify-between items-center">
     {#if background}
       <div
         style={background.length > 9 ? `background: url('${background}'), lightgrey;` : `background: ${background};`}

@@ -62,9 +62,13 @@
     flex-wrap: wrap;
     flex-basis: 50%;
   }
+
+  .withdraw {
+    background: lightgreen;
+  }
 </style>
 
-<div class="body html flex flex-column w-100 h-100" in:fade>
+<div class="body html flex flex-column items-center w-100 h-100" in:fade>
   <div class="heading flex flex-row w-100 h-33">
     <h1 class="title w-50">My Loads</h1>
   </div>
@@ -79,6 +83,7 @@
       </div>
     {/each}
   </div>
+  <div class="fixed bottom-2 pa3 br3 withdraw">Withdraw All</div>
 </div>
 
 <section

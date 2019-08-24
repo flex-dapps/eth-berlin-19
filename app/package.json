@@ -12,10 +12,16 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "assert": "^2.0.0",
+    "circomlib": "0.0.12",
+    "crypto": "^1.0.1",
     "ethers": "^4.0.36",
     "lowdb": "^1.0.0",
+    "svelte-routing": "^1.3.0",
     "sirv-cli": "^0.4.4",
-    "svelte-routing": "^1.3.0"
+    "snarkjs": "^0.1.16",
+    "web3": "^1.2.1",
+    "websnark": "0.0.5"
   },
   "scripts": {
     "build": "rollup -c",

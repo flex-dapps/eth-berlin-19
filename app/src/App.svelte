@@ -1,11 +1,33 @@
 <script>
-	export let name;
+	  import { Router, Route, navigate } from 'svelte-routing';
+	  import { onMount } from 'svelte';
+
+	  import {Landing} from './components';
 </script>
 
 <style>
-	h1 {
-		color: purple;
-	}
+  :global(body) {
+    font-family: 'Arial';
+  }
 </style>
 
-<h1>Hello {name}!</h1>
+
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+</svelte:head>
+
+<div
+  id="app"
+  class="flex h-100 flex-column justify-start relative"
+>
+	<div id="screen" class="h-100 w-100 overflow-hidden" >
+	<h1>Hello!</h1>
+		<Router>
+			<Route path="landing">
+				<Landing />
+			</Route>
+		</Router>
+	</div>
+</div>

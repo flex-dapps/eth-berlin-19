@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "ethers": "^4.0.36",
+    "lowdb": "^1.0.0",
     "sirv-cli": "^0.4.4"
   },
   "scripts": {

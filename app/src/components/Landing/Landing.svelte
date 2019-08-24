@@ -30,10 +30,6 @@
     z-index: 2;
   }
 
-  #floor div {
-    margin-top: -35vh;
-  }
-
   .start {
     background: #2da2b0;
     border-radius: 0.5rem;
@@ -55,17 +51,34 @@
   #plant {
     margin-right: -2rem;
   }
+
+  h1 {
+    color: #ffc555;
+    -webkit-text-stroke: #eb5757 0.1rem;
+    font-size: 4rem;
+    margin: 0.5rem;
+  }
+
+  h5 {
+    font-family: "VT323", monospace;
+    font-size: 2rem;
+    margin: 0;
+  }
 </style>
 
 <div id="screen" class="flex flex-column justify-between items-center">
-  <div>
+  <div class="title">
     <h1>SUDZ</h1>
-    <p>Very Clean</p>
+    <h5>
+      Very Clean
+      <br />
+      Laundry Simulator
+    </h5>
   </div>
 
   <div class="pa3">
     <div class="flex justify-center items-end mb5 pr5">
-      <img class="w-50 pb3" id="plant" src="../../../img/plant_02.png" />
+      <img class="w-50 pb4" id="plant" src="../../../img/plant_02.png" />
       <div class="z2 washer flex justify-center items-end">
         <WashingMachine size={45} />
       </div>

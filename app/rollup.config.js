@@ -2,6 +2,9 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
+import json from 'rollup-plugin-json';
+import builtins from 'rollup-plugin-node-builtins';
+import ignore from 'rollup-plugin-ignore';
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -15,6 +18,9 @@ export default {
 		file: 'public/bundle.js'
 	},
 	plugins: [
+		json(),
+		builtins(),
+		// ignore(['worker_threads']),
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,

@@ -1,16 +1,23 @@
+import { writable } from 'svelte/store'
 import ethers from 'ethers'
+import Web3 from 'web3'
 import low from 'lowdb'
+import ProviderBridge from 'ethers-web3-bridge'
 import LocalStorage from 'lowdb/adapters/LocalStorage'
+import tornadoDetails from './tornado'
 
 const adapter = new LocalStorage('db')
 const db = low(adapter)
 
-db.defaults({ wallets: [], sweeps: [], activeWallet: 0 }).write()
+db.defaults({ dirtyWallet: {}, cleanWallet: {} }).write()
+
+let address = writable()
 
 export default {
   addBounty,
   claimBounty,
-  init
+  init,
+  address
 }
 
 let tornadoAddress
@@ -18,10 +25,33 @@ let proxyAddress
 let web3
 let provider
 
+export function init(_tornadoAddress, _proxyAddress) {
+  // tornadoAddress = _tornadoAddress
+  // proxyAddress = _proxyAddress
+  // provider = new ethers.getDefaultProvider()
+  // const dirtyWallet = generateDirtyWallet()
+  // address.set(dirtyWallet.address)
+  // console.log(dirtyWallet.address)
+  // dirtyWallet.connect(provider)
+  // const web3 = new Web3(new ProviderBridge(provider, dirtyWallet))
+  // generateCleanWallet()
+  // window.tornado.init(web3)
+}
+
+export async function deposit() {
+  // const { commitment, note } = window.tornado.deposit()
+  // // call deposit on mixer with commitment as param 1 (with 0.1 eth)
+  // const contract = new ethers.Contract(
+  //   tornadoAddress,
+  //   tornadoDetails.abi,
+  //   provider
+  // )
+  // contract.connect(wallet)
+  // contract.deposit(commitment, { value: ethers.utils.parseEther('0.1') })
+}
+
 export async function hasEnoughEth() {
-  const wallets = db.get('wallets').value()
-  const activeWallet = db.get('activeWallet').value()
-  const wallet = wallets[activeWallet]
+  const wallet = db.get('dirtyWallet').value()
   const balance = await wallet.getBalance()
   return balance.gte(ethers.utils.parseEther('0.1'))
 }
@@ -42,44 +72,14 @@ export function claimBounty() {
   // proxy.withdraw(note)
 }
 
-export function init(_tornadoAddress, _proxyAddress, _web3) {
-  tornadoAddress = _tornadoAddress
-  proxyAddress = _proxyAddress
-  web3 = _web3
-  provider = new ethers.providers.Web3Provider(web3.currentProvider)
-}
-
-export function generateAndConnect() {
-  const wallet = generateNewWallet()
-  const currentWallet = db.get('activeWallet').value()
-  db.set('activeWallet', currentWallet + 1).write()
-  wallet.connect(provider)
-  return wallet
-}
-
-export function generateNewWallet() {
+export function generateDirtyWallet() {
   const wallet = new ethers.Wallet.createRandom()
-  db.get('wallets')
-    .push(wallet)
-    .write()
+  db.set('dirtyWallet', wallet).write()
   return wallet
 }
 
-export async function sweepTo(final) {
-  const allWallets = db.get('wallets').value()
-  let gasPrice = await provider.getGasPrice()
-  let gasLimit = 21000
-  let ethForGas = gasPrice.mul(gasLimit)
-  for (let _wallet of allWallets) {
-    const wallet = new ethers.Wallet(_wallet.signingKey.privateKey, provider)
-    let balance = await wallet.getBalance()
-    let value = balance.sub(ethForGas)
-    const tx = wallet.sendTransaction({
-      to: final,
-      value: value,
-      gasLimit: gasLimit,
-      gasPrice: gasPrice
-    })
-    db.get('sweeps').push(tx.hash)
-  }
+export function generateCleanWallet() {
+  const wallet = new ethers.Wallet.createRandom()
+  db.set('cleanWallet', wallet).write()
+  return wallet
 }

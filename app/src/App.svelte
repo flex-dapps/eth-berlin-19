@@ -1,8 +1,8 @@
 <script>
-  import { writable } from "svelte/store";
+  import { writable, get } from "svelte/store";
   import { Router, Route, navigate } from "svelte-routing";
-	import { onMount } from "svelte";
-	// import { RammettoOne } from '../public/RammettoOne-Regular.ttf'
+  import { onMount } from "svelte";
+  // import { RammettoOne } from '../public/RammettoOne-Regular.ttf'
 
   import { Landing, Home, MyLoads } from "./components";
 
@@ -15,7 +15,8 @@
     balance = wallet.balance;
     cleanAddress = wallet.cleanAddress;
     cleanBalance = wallet.cleanBalance;
-    console.log({ address });
+    commitments = wallet.commitments;
+    console.log(get(commitments));
   });
 
   export let wallet;
@@ -23,6 +24,7 @@
   let balance = writable();
   let cleanAddress = writable();
   let cleanBalance = writable();
+  let commitments = writable();
 
   function addBounty() {
     wallet.addBounty();
@@ -33,12 +35,15 @@
   function deposit() {
     wallet.deposit();
   }
+  function withdraw() {
+    wallet.withdrawAll();
+  }
 </script>
 
 <style>
-	:global(h1) {
-		font-family: 'Rammetto One', cursive;
-	}
+  :global(h1) {
+    font-family: "Rammetto One", cursive;
+  }
 </style>
 
 <svelte:head>
@@ -54,6 +59,7 @@
     <div>{$cleanAddress}</div>
     <div>{$cleanBalance}</div>
     <button on:click={deposit}>Deposit</button>
+    <button on:click={withdraw}>Withdraw</button>
     <Router>
       <Route path="home">
         <Home />

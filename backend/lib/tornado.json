@@ -1,7 +1,7 @@
 {
   "address": {
     "homestead": "0x94A1B5CdB22c43faab4AbEb5c74999895464Ddaf",
-    "kovan": "0x1Cea940cA15a303A0E01B7F8589F39fF34308DB2"
+    "kovan": "0xc8f51a8ade617c4930f558b19b9491d525d01f13"
   },
   "abi": [
     {

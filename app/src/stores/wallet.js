@@ -18,6 +18,7 @@ let address = writable()
 let balance = writable()
 let cleanAddress = writable()
 let cleanBalance = writable()
+let commitments = writable()
 
 export default {
   addBounty,
@@ -27,7 +28,9 @@ export default {
   address,
   cleanAddress,
   cleanBalance,
-  balance
+  withdrawAll,
+  balance,
+  commitments
 }
 
 let tornadoAddress
@@ -45,6 +48,7 @@ export async function init(_tornadoAddress, _proxyAddress) {
   cleanWallet = getCleanWallet(provider)
   address.set(dirtyWallet.address)
   cleanAddress.set(cleanWallet.address)
+  commitments.set(db.get('commitments').value())
   balance.set(await dirtyWallet.getBalance())
   cleanBalance.set(await cleanWallet.getBalance())
   await window.tornado.init(web3)
@@ -53,11 +57,13 @@ export async function init(_tornadoAddress, _proxyAddress) {
 export async function deposit() {
   const { commitment, note } = window.tornado.deposit()
   db.get('commitments')
-    .push(commitment)
+    .push({ commitment, timestamp: Math.floor(Date.now() / 1000) })
     .write()
   db.get('notes')
     .push(note)
     .write()
+
+  commitments.set(db.get('commitments').value())
 
   console.log({ commitment, note })
   // call deposit on mixer with commitment as param 1 (with 0.1 eth)
@@ -77,9 +83,13 @@ export async function deposit() {
 
 export async function withdrawAll() {
   const notes = db.get('notes').value()
+  const txs = []
   for (let note of notes) {
-    withdraw(note)
+    txs.push(await withdraw(note))
   }
+  console.log(txs)
+  db.set('notes', []).write()
+  db.set('commitments', []).write()
 }
 
 export async function withdraw(note) {
@@ -87,7 +97,7 @@ export async function withdraw(note) {
     note,
     cleanWallet.address
   )
-  const res = await (await fetch('http://localhost:3001/relay', {
+  const res = await (await fetch('https://relayer.flexdapps.com/relay', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -100,6 +110,7 @@ export async function withdraw(note) {
     })
   })).json()
   console.log({ res })
+  return res.tx
 }
 
 export async function hasEnoughEth() {

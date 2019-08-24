@@ -21,7 +21,6 @@ app.post('/relay', async (req, res, next) => {
   const { a, b, c, input } = req.body
   const tx = await contract.withdraw(a, b, c, input)
   console.log({ tx })
-  await tx.wait()
   return res.json({ tx })
 })
 

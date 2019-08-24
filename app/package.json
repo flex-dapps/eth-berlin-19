@@ -16,6 +16,7 @@
     "circomlib": "0.0.12",
     "crypto": "^1.0.1",
     "ethers": "^4.0.36",
+    "ethers-web3-bridge": "^0.0.1",
     "lowdb": "^1.0.0",
     "rollup-plugin-ignore": "^1.0.5",
     "rollup-plugin-json": "^4.0.0",

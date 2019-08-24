@@ -1,4 +1,5 @@
 <script>
+  import { writable } from "svelte/store";
   import { Router, Route, navigate } from "svelte-routing";
 	import { onMount } from "svelte";
 	// import { RammettoOne } from '../public/RammettoOne-Regular.ttf'
@@ -10,11 +11,14 @@
       "0x1Cea940cA15a303A0E01B7F8589F39fF34308DB2", // tornado
       "0xc8f51a8ade617c4930f558b19b9491d525d01f13" // proxy
     );
-    address = wallet;
+    address = wallet.address;
+    balance = wallet.balance;
+    console.log({ address });
   });
 
   export let wallet;
-  let address;
+  let address = writable();
+  let balance = writable();
 
   function addBounty() {
     wallet.addBounty();
@@ -41,7 +45,8 @@
 </svelte:head>
 <div id="app" class="flex h-100 flex-column justify-start relative">
   <div id="screen" class="h-100 w-100 overflow-hidden">
-    <!-- <div>{$address}</div> -->
+    <div>{$address}</div>
+    <div>{$balance}</div>
     <button on:click={deposit}>Deposit</button>
     <Router>
       <Route path="home">

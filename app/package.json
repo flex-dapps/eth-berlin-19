@@ -12,9 +12,11 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "copy-to-clipboard": "^3.2.0",
     "ethers": "^4.0.36",
     "ethers-web3-bridge": "^0.0.1",
     "lowdb": "^1.0.0",
+    "qrcode": "^1.4.1",
     "rollup-plugin-ignore": "^1.0.5",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",

@@ -1,15 +1,34 @@
 <script>
   import WashingMachine from "../WashingMachine";
+  import QRCode from "qrcode";
+  import { navigate } from "svelte-routing";
+  import copy from "copy-to-clipboard";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
   import { fade, slide, crossfade } from "svelte/transition";
   console.log(WashingMachine);
   console.log("hello");
+
+  export let address;
+  export let balance;
+  export let cleanAddress;
+  export let cleanBalance;
+
+  let addressModal = false;
+
+  let qrCode = writable();
+
+  function openAddressModal() {
+    console.log(cleanAddress);
+    QRCode.toDataURL(cleanAddress, (err, url) => {
+      console.log(url);
+      qrCode.set(url);
+    });
+    addressModal = true;
+  }
 </script>
 
 <style>
-  section {
-  }
-
   section::after {
     content: "";
     background: url("../../../img/wallpaper_03.png");
@@ -48,7 +67,7 @@
     margin-left: 8rem;
     border: 2px solid #eb5757;
   }
-  
+
   .title {
     padding-top: 2rem;
     transform: rotate(-8.2deg);
@@ -83,9 +102,37 @@
     font-size: 2rem;
     margin: 0;
   }
+
+  .dark-fade {
+    background: #000000bb;
+    color: white;
+  }
+
+  .close-modal {
+    background: red;
+  }
 </style>
 
 <div id="screen" class="flex flex-column justify-between items-center">
+  {#if addressModal}
+    <div
+      class="flex flex-column absolute dark-fade items-center justify-around
+      h-100 w-100 z-5">
+      <div class="flex flex-column items-center justify-center">
+        <img
+          src={$qrCode}
+          alt="qr"
+          class="w-50"
+          on:click={() => {
+            copy(address);
+          }} />
+        <div class="pa2">Send ETH here, tap QR to copy address</div>
+      </div>
+      <div class="pa3 close-modal" on:click={() => (addressModal = false)}>
+        Back to the suds
+      </div>
+    </div>
+  {/if}
   <div class="title">
     <h1>SUDZ</h1>
     <h5>
@@ -93,18 +140,26 @@
       <br />
       Laundry Simulator
     </h5>
-    <button on:click='/myloads' class="checkLoads">check loads 💦</button>
+    <button class="checkLoads" on:click={() => navigate('/myloads')}>
+      check loads 💦
+    </button>
   </div>
 
   <div class="pa3">
     <div class="flex justify-center items-end mb5 pr5">
-      <img class="w-50 pb4" id="plant" src="../../../img/plant_02.png" alt='plant' />
+      <img
+        class="w-50 pb4"
+        id="plant"
+        src="../../../img/plant_02.png"
+        alt="plant" />
       <div class="z2 washer flex justify-center items-end">
         <WashingMachine size={45} />
       </div>
     </div>
     <div class="w-100 flex justify-center mt2">
-      <button class="start w-75 pa3">Start with 0.1 Eth</button>
+      <button class="start w-75 pa3" on:click={openAddressModal}>
+        Get Soapy
+      </button>
     </div>
   </div>
 </div>

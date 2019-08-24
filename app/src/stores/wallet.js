@@ -85,7 +85,11 @@ export async function withdrawAll() {
   const notes = db.get('notes').value()
   const txs = []
   for (let note of notes) {
-    txs.push(await withdraw(note))
+    try {
+      txs.push(await withdraw(note))
+    } catch (e) {
+      console.error(e)
+    }
   }
   console.log(txs)
   db.set('notes', []).write()

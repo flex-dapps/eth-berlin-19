@@ -3,6 +3,30 @@
   import { fade, slide, crossfade } from "svelte/transition";
 
   export let size = 50;
+  const rand = (x = 2) => {
+    return Math.round(Math.random() * x);
+  };
+  let plants = rand(2);
+  let laundry = rand(2);
+  let backgrounds = {
+    colours: ["#5d526d", "#7dac7d", "#b3e876", "#fff66d", "#fff66d"],
+    images: [
+      "../../../img/wallpaper_04.jpg",
+      "../../../img/wallpaper_05.jpg",
+      "../../../img/wallpaper_03.png",
+      "../../../img/wallpaper_02.gif",
+      "../../../img/wallpaper_01.gif"
+    ]
+  };
+
+  let backgroundType = backgrounds[Object.keys(backgrounds)[rand(1)]];
+  let background =
+    backgroundType[Math.floor(Math.random() * Object.keys(backgrounds).length)];
+
+  export let deposit;
+  export let withdraw;
+  export let commitment;
+  let withdrawing;
 </script>
 
 <style>
@@ -18,6 +42,7 @@
     background: #ffc555;
     height: 20%;
     border-bottom: 0.2rem solid #00000020;
+    background-blend-mode: soft-light;
   }
 
   #dial {
@@ -57,6 +82,7 @@
     background: #ffc555;
     border: 0.1rem solid #00000020;
     width: 62%;
+    background-blend-mode: soft-light;
     height: 50%;
   }
 
@@ -85,46 +111,107 @@
     position: relative;
     height: 100%;
   }
+
+  .munny {
+    animation: spin 2s infinite linear;
+  }
+  .rumble {
+    animation: rumbling 0.1s infinite linear;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rumbling {
+    from {
+      transform: rotateZ(5deg);
+    }
+    to {
+      transform: rotateZ(-5deg);
+    }
+  }
 </style>
 
+<!-- Make responsive -->
 <div
   class="container"
   style="{`width: ${size}vw; height: ${size * 1.2}vw;`}in:fade">
-  <div class="w-100 flex justify-around items-start;" id="extras">
-    <img src="../../../img/laundry_01.png" />
-    <img src="../../../img/laundry_02.png" />
-    <img src="../../../img/plant_01.png" />
+  <div
+    class={`w-100 flex justify-around items-start; ${plants == 2 ? 'flex-row-reverse' : ''}`}
+    id="extras">
+    {#if laundry}
+      {#if laundry === 1}
+        <img alt="" src="../../../img/laundry_01.png" />
+      {:else if laundry === 2}
+        <img alt="" src="../../../img/laundry_01.png" />
+        <img alt="" src="../../../img/laundry_02.png" />
+      {/if}
+    {/if}
+    {#if plants}
+      {#if plants === 1}
+        <img alt="" src="../../../img/plant_01.png" />
+      {:else if plants === 2}
+        <img alt="" src="../../../img/plant_01.png" />
+        <img alt="" src="../../../img/plant_02.png" />
+      {/if}
+    {/if}
   </div>
+
   <div
     id="machine"
-    class="flex flex-column w-100 h-100 justify-between items-center">
-    <div id="panel" class="w-100 flex justify-around items-center">
-      <div class="flex items-center justify-between w-25 h-100">
-        <div id="dial" class="flex justify-center items-center">
-          <div />
+    class="flex flex-column w-100 h-100 justify-between items-center {withdrawing ? 'rumble' : ''}">
+    {#if background}
+      <div
+        style={background.length > 9 ? `background: url('${background}'), lightgrey;` : `background: ${background};`}
+        id="panel"
+        class="w-100 flex justify-around items-center">
+        <div class="flex items-center justify-between w-25 h-100">
+          <div id="dial" class="flex justify-center items-center">
+            <div />
+          </div>
+          <div id="dial" class="flex justify-center items-center">
+            <div />
+          </div>
         </div>
-        <div id="dial" class="flex justify-center items-center">
-          <div />
+        <div class="flex items-center justify-between w-25 h-100">
+          <div id="button" class="flex items-center justify-center">
+            <div />
+          </div>
+          <div id="button" class="flex items-center justify-center">
+            <div />
+          </div>
+          <div id="button" class="flex items-center justify-center">
+            <div />
+          </div>
         </div>
       </div>
-      <div class="flex items-center justify-between w-25 h-100">
-        <div id="button" class="flex items-center justify-center">
-          <div />
-        </div>
-        <div id="button" class="flex items-center justify-center">
-          <div />
-        </div>
-        <div id="button" class="flex items-center justify-center">
-          <div />
+      <div
+        style={background.length > 9 ? `background: url('${background}'), lightgrey;` : `background: ${background};`}
+        id="door"
+        class="flex items-center justify-center">
+        <div class="flex items-center justify-center">
+          <div
+            on:click={() => {
+              if (commitment) {
+                withdrawing = true;
+                withdraw();
+              } else {
+                deposit();
+              }
+            }}
+            class="{commitment ? 'munny' : ''} flex items-center justify-center">
+            {#if commitment}💸{:else}🧼{/if}
+          </div>
         </div>
       </div>
-    </div>
-    <div id="door" class="flex items-center justify-center">
-      <div class="flex items-center justify-center">
-        <div />
-      </div>
-    </div>
-    <div />
+      <div />
+    {/if}
   </div>
 
 </div>

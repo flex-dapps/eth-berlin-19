@@ -54,21 +54,26 @@
 </svelte:head>
 <div id="app" class="flex h-100 flex-column justify-start relative">
   <div id="screen" class="h-100 w-100 overflow-hidden">
-    <div>{$address}</div>
-    <div>{$balance}</div>
-    <div>{$cleanAddress}</div>
-    <div>{$cleanBalance}</div>
-    <button on:click={deposit}>Deposit</button>
-    <button on:click={withdraw}>Withdraw</button>
     <Router>
       <Route path="home">
         <Home />
       </Route>
       <Route path="myloads">
-        <MyLoads />
+        <MyLoads
+          address={$address}
+          cleanAddress={$cleanAddress}
+          balance={$balance}
+          cleanBalance={$cleanBalance}
+          commitments={$commitments}
+          deposit={wallet.deposit}
+          withdraw={wallet.withdrawAll} />
       </Route>
       <Route>
-        <Landing />
+        <Landing
+          address={$address}
+          cleanAddress={$cleanAddress}
+          balance={$balance}
+          cleanBalance={$cleanBalance} />
       </Route>
     </Router>
   </div>

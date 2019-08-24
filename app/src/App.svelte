@@ -2,7 +2,7 @@
 	  import { Router, Route, navigate } from 'svelte-routing';
 	  import { onMount } from 'svelte';
 
-	  import {Landing} from './components';
+	  import {Landing, Home} from './components';
 </script>
 
 <style>
@@ -23,9 +23,11 @@
   class="flex h-100 flex-column justify-start relative"
 >
 	<div id="screen" class="h-100 w-100 overflow-hidden" >
-	<h1>Hello!</h1>
 		<Router>
-			<Route path="landing">
+			<Route path='home'>
+				<Home/>
+			</Route>
+			<Route>
 				<Landing />
 			</Route>
 		</Router>

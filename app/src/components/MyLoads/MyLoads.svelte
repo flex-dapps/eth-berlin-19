@@ -3,7 +3,7 @@
   import { fade, slide, crossfade } from "svelte/transition";
   import WashingMachine from "../WashingMachine";
 
-  import ethers from 'ethers';
+  import ethers from "ethers";
 
   export let commitments;
   export let deposit;
@@ -11,8 +11,7 @@
   export let balance = 0;
   export let cleanBalance = 0;
 
-
-  console.log('blah', balance)
+  console.log("blah", balance);
 </script>
 
 <style>
@@ -46,7 +45,6 @@
   }
 
   .subHead {
-    margin-left: 1rem;
     font-family: "VT323", monospace;
     color: #000;
   }
@@ -57,10 +55,6 @@
     height: 100%;
     opacity: 1;
     z-index: 3;
-  }
-
-  .heading {
-    justify-content: flex-end;
   }
 
   .grid {
@@ -96,12 +90,18 @@ z-index: 2;
 </style>
 
 <div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
-  <div class="heading flex flex-row w-100 h-33">
-    <div class="flex flex-column w-50">
-      <h4 class="subHead w-100">Dirty Coins: {ethers.utils.formatEther(balance)}</h4>
-      <h4 class="subHead w-100">Clean Coins: {ethers.utils.formatEther(cleanBalance)}</h4>
+  <div class="heading flex flex-row w-100 h-33 pb4 justify-around items-center">
+    <div class="flex flex-column justify-start items-start f3">
+      <div class="subHead w-100">
+        Dirty Pennies: {Number(ethers.utils.formatEther(balance)).toFixed(2)}
+      </div>
+      <div class="subHead w-100">
+        Clean Coppers: {Number(ethers.utils.formatEther(cleanBalance)).toFixed(2)}
+      </div>
     </div>
-    <h1 class="title">My Loads 💦</h1>
+    <div class="flex justify-end">
+      <div class="title f2">Loads 💦</div>
+    </div>
   </div>
   <div class="grid flex flex-row w-100">
     {#each Array(10) as washer, i}
@@ -114,7 +114,7 @@ z-index: 2;
       </div>
     {/each}
   </div>
-  <div class="fixed bottom-2 pa3 br3 withdraw">Withdraw All</div>
+  <div class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
 </div>
 
 <section

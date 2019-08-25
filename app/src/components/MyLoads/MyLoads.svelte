@@ -150,6 +150,9 @@
     max-width: 60vh;
     z-index: 2;
   }
+  .go {
+    width: 6rem;
+  }
   #wallpaper {
     max-width: 60vh;
     max-height: 100vh;
@@ -169,7 +172,7 @@
       <div class="tc flex flex-column items-center justify-center w-80">
         <h3>Claim your Squeaky™ Load</h3>
         <input bind:value={withdrawAddress} />
-        <div on:click={clickGo} class="pa3 mt3 withdraw">GO</div>
+        <div on:click={clickGo} class="pa2 mt3 withdraw go">GO</div>
         {#if withdrawError}
           <div>{withdrawError}</div>
         {/if}
@@ -177,7 +180,7 @@
           <a target="_blank" href="https://etherscan.com/tx/{latestWithdraw}">{latestWithdraw}</a>
         {/if}
       </div>
-      <div class="pa3 back-button" on:click={() => (showSendModal = false)}>
+      <div class="pa3 backbutton" on:click={() => (showSendModal = false)}>
         Back to the suds
       </div>
     </div>

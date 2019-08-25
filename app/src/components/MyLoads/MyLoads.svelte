@@ -108,14 +108,6 @@
     color: white;
   }
 
-  .close-modal {
-    background: red;
-  }
-
-  .go {
-    background: palevioletred;
-  }
-
   .current-reward {
     animation: rainbow 5s infinite;
   }
@@ -177,7 +169,7 @@
       <div class="tc flex flex-column items-center justify-center w-80">
         <h3>Claim your Squeaky™ Load</h3>
         <input bind:value={withdrawAddress} />
-        <div on:click={clickGo} class="pa3 mt3 go">GO!</div>
+        <div on:click={clickGo} class="pa3 mt3 withdraw">GO!</div>
         {#if withdrawError}
           <div>{withdrawError}</div>
         {/if}
@@ -185,7 +177,7 @@
           <a target="_blank" href="https://etherscan.com/tx/{latestWithdraw}">{latestWithdraw}</a>
         {/if}
       </div>
-      <div class="pa3 close-modal" on:click={() => (showSendModal = false)}>
+      <div class="pa3 back-button" on:click={() => (showSendModal = false)}>
         Back to the suds
       </div>
     </div>

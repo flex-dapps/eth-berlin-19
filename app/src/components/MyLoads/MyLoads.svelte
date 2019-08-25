@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
   import WashingMachine from "../WashingMachine";
+  import { navigate } from "svelte-routing";
 
   import ethers from "ethers";
 
@@ -15,6 +16,17 @@
 </script>
 
 <style>
+.backbutton {
+    background: #ffc555;
+    border-radius: 0.2rem;
+    font-family: "VT323", monospace;
+    font-size: 1.5rem;
+    align-self: right;
+    color: #eb5757;
+    margin-left: 8rem;
+    border: 2px solid #eb5757;
+  }
+  
   section::after {
     content: "";
     background: url("../../../img/wallpaper_03.png");
@@ -92,6 +104,7 @@ z-index: 2;
 <div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
   <div class="heading flex flex-row w-100 h-33 pb4 justify-around items-center">
     <div class="flex flex-column justify-start items-start f3">
+    
       <div class="subHead w-100">
         Dirty Pennies: {Number(ethers.utils.formatEther(balance)).toFixed(2)}
       </div>
@@ -114,7 +127,10 @@ z-index: 2;
       </div>
     {/each}
   </div>
-  <div class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
+<div class='fixed w-100 bottom-2 right-2 justify-center flex'>
+  <div on:click={() => navigate('/')} class="backbutton flex justify-center items-center pa3 br3 ma2" >Back</div>
+  <div class="pa3 br3 withdraw flex justify-center ma2 items-center">Send</div>
+  </div>
 </div>
 
 <section

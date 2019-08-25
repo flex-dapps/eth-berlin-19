@@ -33,6 +33,8 @@ console.log(background)
 </script>
 
 <style>
+
+
   #machine {
     border: 1px solid #00000050;
     border-radius: 0.5rem;

@@ -139,14 +139,14 @@
       class="flex flex-column absolute dark-fade items-center justify-around
       h-100 w-100 z-5">
       <div class="tc flex flex-column items-center justify-center w-80">
-        <h3>Claim your Squeaky™ Clean Load</h3>
-        <input value={withdrawAddress} />
+        <h3>Claim your Squeaky™ Load</h3>
+        <input bind:value={withdrawAddress} />
         <div on:click={clickGo} class="pa3 mt3 go">GO!</div>
         {#if withdrawError}
           <div>{withdrawError}</div>
         {/if}
         {#if latestWithdraw}
-          <div>{latestWithdraw}</div>
+          <a target="_blank" href="https://etherscan.com/tx/{latestWithdraw}">{latestWithdraw}</a>
         {/if}
       </div>
       <div class="pa3 close-modal" on:click={() => (showSendModal = false)}>

@@ -108,7 +108,6 @@ console.log(background)
     margin-bottom: -5px;
     z-index: 3;
     max-height: 4rem;
-    
   }
 
   #extras img {

@@ -37,9 +37,7 @@
     border-radius: 0.2rem;
     font-family: "VT323", monospace;
     font-size: 1.5rem;
-    align-self: right;
     color: #eb5757;
-    margin-left: 8rem;
     border: 2px solid #eb5757;
   }
   
@@ -100,6 +98,11 @@
 
   .withdraw {
     background: lightgreen;
+    border-radius: 0.2rem;
+    font-family: "VT323", monospace;
+    font-size: 1.5rem;
+    color: darkgreen;
+    border: 2px solid darkgreen;
   }
 
   .dark-fade {
@@ -177,9 +180,9 @@
       </div>
     {/each}
   </div>
-<div class='fixed w-100 bottom-2 right-2 justify-center flex'>
-  <div on:click={() => navigate('/')} class="backbutton flex justify-center items-center pa3 br3 ma2" >Back</div>
-<div on:click={() => (showSendModal = true)} class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
+<div class='fixed w-100 bottom-2 justify-center flex'>
+  <div on:click={() => navigate('/')} class="backbutton flex justify-center items-center pa3 br3 ma3" >Back</div>
+  <div on:click={() => (showSendModal = true)} class="pa3 br3 ma3 flex items-center withdraw">Send</div>
   </div>
 </div>
 

@@ -9,7 +9,7 @@
   onMount(async () => {
     wallet.init(
       "0x94A1B5CdB22c43faab4AbEb5c74999895464Ddaf", // tornado
-      "0xDa5eF41d394daF4A92e4D88B6fd094e745711991" // proxy
+      "0xd1eba3c595a61175bf734dcc41a032e59b7ceabf" // proxy
     );
     address = wallet.address;
     balance = wallet.balance;

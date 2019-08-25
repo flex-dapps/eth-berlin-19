@@ -34,8 +34,6 @@
 </script>
 
 <style>
-
-
   #machine {
     border: 1px solid #00000050;
     border-radius: 0.5rem;
@@ -126,6 +124,19 @@
     animation: glowing 3s infinite alternate;
   }
 
+  .greenglow {
+    animation: glowgreen 1s infinite alternate;
+  }
+
+  @keyframes glowgreen {
+    from {
+      box-shadow: 0px 0px 40px #00ff00ee;
+    }
+    to {
+      box-shadow: 1px 1px 1px #00ff00ee;
+    }
+  }
+
   @keyframes glowing {
     from {
       box-shadow: 10px 10px 50px #ff0000aa;
@@ -174,16 +185,32 @@
     id="extras">
     {#if laundry}
       {#if laundry === 1}
-        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
+        <img
+          width={size * 1.2 + 'px'}
+          height={size * 1.8 + 'px'}
+          alt=""
+          src="../../../img/laundry_01.png" />
       {:else if laundry === 2}
-        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
+        <img
+          width={size * 1.2 + 'px'}
+          height={size * 1.8 + 'px'}
+          alt=""
+          src="../../../img/laundry_01.png" />
       {/if}
     {/if}
     {#if plants}
       {#if plants === 1}
-        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
+        <img
+          width={size * 1.2 + 'px'}
+          height={size * 1.8 + 'px'}
+          alt=""
+          src="../../../img/plant_01.png" />
       {:else if plants === 2}
-        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
+        <img
+          width={size * 1.2 + 'px'}
+          height={size * 1.8 + 'px'}
+          alt=""
+          src="../../../img/plant_01.png" />
       {/if}
     {/if}
   </div>
@@ -220,6 +247,7 @@
       <div
         style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}
         id="door"
+        class:greenglow={commitment && !tx}
         class="flex items-center justify-center">
         <div class="flex items-center justify-center">
           <div

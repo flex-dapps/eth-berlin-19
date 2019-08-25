@@ -20,10 +20,10 @@
   };
 
   let backgroundType = backgrounds[Object.keys(backgrounds)[rand(1)]];
-  console.log(backgroundType)
+  console.log(backgroundType);
   let background =
     backgroundType[Math.floor(Math.random() * Object.keys(backgrounds).length)];
-console.log(background)
+  console.log(background);
 
   export let deposit;
   export let withdraw;

@@ -7,11 +7,10 @@
 
   export let commitments;
   export let deposit;
-  export let withdraw;
+  export let withdrawIndex;
   export let balance = 0;
   export let cleanBalance = 0;
-
-  console.log("blah", balance);
+  export let proxyBalance = 0;
 </script>
 
 <style>
@@ -73,6 +72,45 @@
   .withdraw {
     background: lightgreen;
   }
+
+  .current-reward {
+    animation: rainbow 5s infinite;
+  }
+  @keyframes rainbow {
+    0% {
+      color: orange;
+    }
+    10% {
+      color: purple;
+    }
+    20% {
+      color: red;
+    }
+    30% {
+      color: CadetBlue;
+    }
+    40% {
+      color: yellow;
+    }
+    50% {
+      color: coral;
+    }
+    60% {
+      color: green;
+    }
+    70% {
+      color: cyan;
+    }
+    80% {
+      color: DeepPink;
+    }
+    90% {
+      color: DodgerBlue;
+    }
+    100% {
+      color: orange;
+    }
+  }
 </style>
 
 <div class="body html flex flex-column items-center w-100 h-100" in:fade>
@@ -85,8 +123,11 @@
         Clean Coppers: {Number(ethers.utils.formatEther(cleanBalance)).toFixed(2)}
       </div>
     </div>
-    <div class="flex justify-end">
+    <div class="flex flex-column items-end">
       <div class="title f2">Loads 💦</div>
+      <div class="current-reward">
+        Reward: ~{Number(ethers.utils.formatEther(balance) / 20).toFixed(2)} ETH
+      </div>
     </div>
   </div>
   <div class="grid flex flex-row w-100">
@@ -96,7 +137,7 @@
           size={30}
           commitment={commitments && commitments[i] ? commitments[i] : null}
           {deposit}
-          {withdraw} />
+          withdraw={() => withdrawIndex(i)} />
       </div>
     {/each}
   </div>

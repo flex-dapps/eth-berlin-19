@@ -9,13 +9,14 @@
   onMount(async () => {
     wallet.init(
       "0x1Cea940cA15a303A0E01B7F8589F39fF34308DB2", // tornado
-      "0xc8f51a8ade617c4930f558b19b9491d525d01f13" // proxy
+      "0xAceaf1EB83949D0DFd16D75421e4Ae53dd144180" // proxy
     );
     address = wallet.address;
     balance = wallet.balance;
     cleanAddress = wallet.cleanAddress;
     cleanBalance = wallet.cleanBalance;
     commitments = wallet.commitments;
+    proxyBalance = wallet.proxyBalance;
     console.log(get(commitments));
   });
 
@@ -25,6 +26,7 @@
   let cleanAddress = writable();
   let cleanBalance = writable();
   let commitments = writable();
+  let proxyBalance = writable();
 
   function addBounty() {
     wallet.addBounty();
@@ -66,14 +68,17 @@
           cleanBalance={$cleanBalance}
           commitments={$commitments}
           deposit={wallet.deposit}
-          withdraw={wallet.withdrawAll} />
+          proxyBalance={$proxyBalance}
+          depositIndex={wallet.depositIndex}
+          withdrawIndex={wallet.withdrawIndex} />
       </Route>
       <Route>
         <Landing
           address={$address}
           cleanAddress={$cleanAddress}
           balance={$balance}
-          cleanBalance={$cleanBalance} />
+          cleanBalance={$cleanBalance}
+          proxyBalance={$proxyBalance} />
       </Route>
     </Router>
   </div>

@@ -161,18 +161,18 @@ console.log(background)
     id="extras">
     {#if laundry}
       {#if laundry === 1}
-        <img width={size*1.2 + 'px'} alt="" src="../../../img/laundry_01.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
       {:else if laundry === 2}
-        <img width={size*1.2 + 'px'} alt="" src="../../../img/laundry_01.png" />
-        <img width={size*1.2 + 'px'} alt="" src="../../../img/laundry_02.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_02.png" />
       {/if}
     {/if}
     {#if plants}
       {#if plants === 1}
-        <img width={size*1.2 + 'px'} alt="" src="../../../img/plant_01.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
       {:else if plants === 2}
-        <img width={size*1.2 + 'px'} alt="" src="../../../img/plant_01.png" />
-        <img width={size*1.2 + 'px'} alt="" src="../../../img/plant_02.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_02.png" />
       {/if}
     {/if}
   </div>

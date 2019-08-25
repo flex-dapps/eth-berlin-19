@@ -1,16 +1,32 @@
 <script>
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
+  import {takeLaundryHome} from '../../stores/wallet.js';
   import WashingMachine from "../WashingMachine";
   import { navigate } from "svelte-routing";
 
   import ethers from "ethers";
 
+  let showSendModal = false;
+  let withdrawAddress = ''
+  let latestWithdraw = ''
+  let withdrawError = null
   export let commitments;
   export let deposit;
   export let withdraw;
   export let balance = 0;
   export let cleanBalance = 0;
+
+  const clickGo = async () => {
+    withdrawError = null
+    try {
+      const tx = await takeLaundryHome(withdrawAddress)
+      latestWithdraw = tx.hash 
+    } catch (error) {
+      withdrawError = error.message  
+    }
+  }
+
 
   console.log("blah", balance);
 </script>
@@ -86,9 +102,22 @@
     background: lightgreen;
   }
 
+  .dark-fade {
+    background: #000000bb;
+    color: white;
+  }
+
+  .close-modal {
+    background: red;
+  }
+
+  .go {
+    background: palevioletred;
+  }
+
   #myloads {
     max-width: 60vh;
-z-index: 2;
+    z-index: 2;
   }
 
   #wallpaper {
@@ -102,6 +131,27 @@ z-index: 2;
 </style>
 
 <div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
+  {#if showSendModal}
+    <div
+      class="flex flex-column absolute dark-fade items-center justify-around
+      h-100 w-100 z-5">
+      <div class="tc flex flex-column items-center justify-center w-80">
+        <h3>Claim your Squeaky™ Clean Load</h3>
+        <input value={withdrawAddress} />
+        <div on:click={clickGo} class="pa3 mt3 go">GO!</div>
+        {#if withdrawError}
+          <div>{withdrawError}</div>
+        {/if}
+        {#if latestWithdraw}
+          <div>{latestWithdraw}</div>
+        {/if}
+      </div>
+      <div class="pa3 close-modal" on:click={() => (showSendModal = false)}>
+        Back to the suds
+      </div>
+    </div>
+  {/if}
+
   <div class="heading flex flex-row w-100 h-33 pb4 justify-around items-center">
     <div class="flex flex-column justify-start items-start f3">
     
@@ -129,7 +179,7 @@ z-index: 2;
   </div>
 <div class='fixed w-100 bottom-2 right-2 justify-center flex'>
   <div on:click={() => navigate('/')} class="backbutton flex justify-center items-center pa3 br3 ma2" >Back</div>
-  <div class="pa3 br3 withdraw flex justify-center ma2 items-center">Send</div>
+<div on:click={() => (showSendModal = true)} class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
   </div>
 </div>
 

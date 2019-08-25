@@ -136,10 +136,11 @@
 <div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
   {#if showSendModal}
     <div
+      transition:fade
       class="flex flex-column absolute dark-fade items-center justify-around
       h-100 w-100 z-5">
       <div class="tc flex flex-column items-center justify-center w-80">
-        <h3>Claim your Squeaky™ Load</h3>
+        <h3>Claim your Coppers™</h3>
         <input bind:value={withdrawAddress} />
         <div on:click={clickGo} class="pa3 mt3 go">GO!</div>
         {#if withdrawError}

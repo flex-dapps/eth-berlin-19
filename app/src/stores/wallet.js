@@ -96,7 +96,9 @@ export async function deposit() {
 
   commitments.set(db.get('commitments').value())
 
-  console.log({ commitment, note })
+  const nonce = await dirtyWallet.getTransactionCount('pending')
+
+  console.log({ commitment, note, nonce })
   // call deposit on mixer with commitment as param 1 (with 0.1 eth)
   const contract = new ethers.Contract(
     tornadoAddress,
@@ -105,7 +107,8 @@ export async function deposit() {
   )
   let actualContract = contract.connect(dirtyWallet)
   const tx = await actualContract.deposit(commitment, {
-    value: ethers.utils.parseEther('0.1')
+    value: ethers.utils.parseEther('0.1'),
+    nonce
   })
   return tx
 }

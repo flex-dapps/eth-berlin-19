@@ -75,7 +75,7 @@ export async function takeLaundryHome(home) {
     // The balance less exactly the txfee in wei
     let value = balance.sub(gasPrice.mul(gasLimit))
 
-    let tx = await wallet.sendTransaction({
+    let tx = await cleanWallet.sendTransaction({
         gasLimit: gasLimit,
         gasPrice: gasPrice,
         to: home,

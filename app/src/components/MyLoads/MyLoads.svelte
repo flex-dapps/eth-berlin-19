@@ -79,9 +79,23 @@
   .withdraw {
     background: lightgreen;
   }
+
+  #myloads {
+    max-width: 60vh;
+z-index: 2;
+  }
+
+  #wallpaper {
+    max-width: 60vh;
+    max-height: 100vh;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
 </style>
 
-<div class="body html flex flex-column items-center w-100 h-100" in:fade>
+<div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
   <div class="heading flex flex-row w-100 h-33">
     <div class="flex flex-column w-50">
       <h4 class="subHead w-100">Dirty Coins: {ethers.utils.formatEther(balance)}</h4>
@@ -93,7 +107,7 @@
     {#each Array(10) as washer, i}
       <div class="washer flex flex-row">
         <WashingMachine
-          size={30}
+          size={15}
           commitment={commitments && commitments[i] ? commitments[i] : null}
           {deposit}
           {withdraw} />

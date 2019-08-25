@@ -103,14 +103,12 @@ console.log(background)
   }
 
   #extras {
-    height: 4rem;
     margin-bottom: -5px;
     z-index: 3;
   }
 
   #extras img {
     position: relative;
-    height: 100%;
   }
 
   .munny {
@@ -153,24 +151,24 @@ console.log(background)
 <!-- Make responsive -->
 <div
   class:rumble={tx}
-  style="{`width: ${size}vw; height: ${size * 1.2}vw;`}in:fade">
+  style="{`width: ${size}vh; height: ${size * 1.2}vh;`}in:fade">
   <div
     class={`w-100 flex justify-around items-start; ${plants == 2 ? 'flex-row-reverse' : ''}`}
     id="extras">
     {#if laundry}
       {#if laundry === 1}
-        <img alt="" src="../../../img/laundry_01.png" />
+        <img width={size*1.2 + 'px'} alt="" src="../../../img/laundry_01.png" />
       {:else if laundry === 2}
-        <img alt="" src="../../../img/laundry_01.png" />
-        <img alt="" src="../../../img/laundry_02.png" />
+        <img width={size*1.2 + 'px'} alt="" src="../../../img/laundry_01.png" />
+        <img width={size*1.2 + 'px'} alt="" src="../../../img/laundry_02.png" />
       {/if}
     {/if}
     {#if plants}
       {#if plants === 1}
-        <img alt="" src="../../../img/plant_01.png" />
+        <img width={size*1.2 + 'px'} alt="" src="../../../img/plant_01.png" />
       {:else if plants === 2}
-        <img alt="" src="../../../img/plant_01.png" />
-        <img alt="" src="../../../img/plant_02.png" />
+        <img width={size*1.2 + 'px'} alt="" src="../../../img/plant_01.png" />
+        <img width={size*1.2 + 'px'} alt="" src="../../../img/plant_02.png" />
       {/if}
     {/if}
   </div>

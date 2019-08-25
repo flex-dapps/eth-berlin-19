@@ -46,7 +46,7 @@ let cleanWallet
 export async function init(_tornadoAddress, _proxyAddress) {
   tornadoAddress = _tornadoAddress
   proxyAddress = _proxyAddress
-  provider = new ethers.getDefaultProvider('kovan')
+  provider = new ethers.getDefaultProvider('homestead')
   dirtyWallet = getDirtyWallet(provider)
   cleanWallet = getCleanWallet(provider)
   address.set(dirtyWallet.address)
@@ -68,7 +68,7 @@ export async function init(_tornadoAddress, _proxyAddress) {
     proxyBalance.set(_bal)
   })
 
-  await window.tornado.init(false)
+  await window.tornado.init(true)
 }
 
 export async function takeLaundryHome(home) {

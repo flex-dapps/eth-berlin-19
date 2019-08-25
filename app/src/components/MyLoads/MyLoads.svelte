@@ -26,7 +26,7 @@
     } catch (error) {
       withdrawError = error.message
     }
-  }
+  };
 </script>
 
 <style>
@@ -212,7 +212,7 @@
         <WashingMachine
           size={15}
           commitment={commitments && commitments[i] ? commitments[i] : null}
-          {deposit}
+          deposit={() => deposit(i)}
           withdraw={() => withdrawIndex(i)} />
       </div>
     {/each}

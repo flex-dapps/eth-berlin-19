@@ -28,6 +28,7 @@
   export let deposit;
   export let withdraw;
   export let commitment;
+  export let index;
   let withdrawing;
   let tx;
 </script>
@@ -229,7 +230,7 @@
                 withdrawing = false;
               } else {
                 tx = true;
-                tx = await deposit();
+                tx = await deposit(index);
                 await tx.wait();
                 tx = null;
               }

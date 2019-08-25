@@ -1,15 +1,31 @@
 <script>
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
+  import {takeLaundryHome} from '../../stores/wallet.js';
   import WashingMachine from "../WashingMachine";
 
   import ethers from "ethers";
 
+  let showSendModal = false;
+  let withdrawAddress = ''
+  let latestWithdraw = ''
+  let withdrawError = null
   export let commitments;
   export let deposit;
   export let withdraw;
   export let balance = 0;
   export let cleanBalance = 0;
+
+  const clickGo = async () => {
+    withdrawError = null
+    try {
+      const tx = await takeLaundryHome(withdrawAddress)
+      latestWithdraw = tx.hash 
+    } catch (error) {
+      withdrawError = error.message  
+    }
+  }
+
 
   console.log("blah", balance);
 </script>
@@ -73,9 +89,44 @@
   .withdraw {
     background: lightgreen;
   }
+
+  .dark-fade {
+    background: #000000bb;
+    color: white;
+  }
+
+  .close-modal {
+    background: red;
+  }
+
+  .go {
+    background: palevioletred;
+  }
+
 </style>
 
 <div class="body html flex flex-column items-center w-100 h-100" in:fade>
+  {#if showSendModal}
+    <div
+      class="flex flex-column absolute dark-fade items-center justify-around
+      h-100 w-100 z-5">
+      <div class="tc flex flex-column items-center justify-center w-80">
+        <h3>Claim your Squeaky™ Clean Load</h3>
+        <input value={withdrawAddress} />
+        <div on:click={clickGo} class="pa3 mt3 go">GO!</div>
+        {#if withdrawError}
+          <div>{withdrawError}</div>
+        {/if}
+        {#if latestWithdraw}
+          <div>{latestWithdraw}</div>
+        {/if}
+      </div>
+      <div class="pa3 close-modal" on:click={() => (showSendModal = false)}>
+        Back to the suds
+      </div>
+    </div>
+  {/if}
+
   <div class="heading flex flex-row w-100 h-33 pb4 justify-around items-center">
     <div class="flex flex-column justify-start items-start f3">
       <div class="subHead w-100">
@@ -100,7 +151,7 @@
       </div>
     {/each}
   </div>
-  <div class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
+  <div on:click={() => (showSendModal = true)} class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
 </div>
 
 <section

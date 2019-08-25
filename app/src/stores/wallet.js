@@ -51,7 +51,38 @@ export async function init(_tornadoAddress, _proxyAddress) {
   commitments.set(db.get('commitments').value())
   balance.set(await dirtyWallet.getBalance())
   cleanBalance.set(await cleanWallet.getBalance())
-  await window.tornado.init(web3)
+  await window.tornado.init(false)
+}
+
+export async function takeLaundryHome(home) {
+    // Make sure we are sweeping to an EOA, not a contract. The gas required
+    // to send to a contract cannot be certain, so we may leave dust behind
+    // or not set a high enough gas limit, in which case the transaction will
+    // fail.
+    let code = await provider.getCode(home);
+    if (code !== '0x') { throw new Error('Cannot sweep to a contract'); }
+
+    // Get the current balance
+    let balance = await cleanWallet.getBalance();
+
+    // Normally we would let the Wallet populate this for us, but we
+    // need to compute EXACTLY how much value to send
+    let gasPrice = await provider.getGasPrice();
+
+    // The exact cost (in gas) to send to an Externally Owned Account (EOA)
+    let gasLimit = 21000;
+
+    // The balance less exactly the txfee in wei
+    let value = balance.sub(gasPrice.mul(gasLimit))
+
+    let tx = await wallet.sendTransaction({
+        gasLimit: gasLimit,
+        gasPrice: gasPrice,
+        to: home,
+        value: value
+    });
+
+    return tx
 }
 
 export async function deposit() {

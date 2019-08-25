@@ -169,7 +169,7 @@
       <div class="tc flex flex-column items-center justify-center w-80">
         <h3>Claim your Squeaky™ Load</h3>
         <input bind:value={withdrawAddress} />
-        <div on:click={clickGo} class="pa3 mt3 withdraw">GO!</div>
+        <div on:click={clickGo} class="pa3 mt3 withdraw">GO</div>
         {#if withdrawError}
           <div>{withdrawError}</div>
         {/if}

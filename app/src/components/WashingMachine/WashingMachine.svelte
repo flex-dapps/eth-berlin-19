@@ -1,27 +1,27 @@
 <script>
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
-  
-    export let deposit;
-    export let withdraw;
-    export let commitment;
-    let withdrawing;
-    let tx;
 
-  let seed = commitment ? commitment.timestamp : 1234
-  console.log(seed % 3)
-  console.log(seed)
+  export let deposit;
+  export let withdraw;
+  export let commitment;
+  let withdrawing;
+  let tx;
+
+  let seed = commitment
+    ? commitment.timestamp
+    : Math.round(Math.random() * 100000);
+  console.log(seed % 3);
+  console.log(seed);
   export let size = 50;
   const rand = (x = 2) => {
     return Math.round(Math.random() * x);
   };
   let plants = seed % 3;
   let laundry = seed % 3;
-  let backgrounds = ["#5d526d", "#7dac7d", "#b3e876", "#fff66d", "#fff66d"]
-  let index = (seed % backgrounds.length+1)
+  let backgrounds = ["#5d526d", "#7dac7d", "#b3e876", "#fff66d", "#fff66d"];
+  let index = (seed % backgrounds.length) + 1;
   let background = backgrounds[seed % backgrounds.length];
-
-
 </script>
 
 <style>
@@ -168,101 +168,101 @@
 </style>
 
 {#if seed}
-<div
-  class:rumble={tx}
-  style="{`width: ${size}vh; height: ${size * 1.2}vh;`}in:fade">
   <div
-    class={`w-100 flex justify-around items-start; ${plants == 2 ? 'flex-row-reverse' : ''}`}
-    id="extras">
-    {#if laundry}
-      {#if laundry === 1}
-        <img
-          width={size * 1.2 + 'px'}
-          height={size * 1.8 + 'px'}
-          alt=""
-          src="../../../img/laundry_01.png" />
-      {:else if laundry === 2}
-        <img
-          width={size * 1.2 + 'px'}
-          height={size * 1.8 + 'px'}
-          alt=""
-          src="../../../img/laundry_01.png" />
+    class:rumble={tx}
+    style="{`width: ${size}vh; height: ${size * 1.2}vh;`}in:fade">
+    <div
+      class={`w-100 flex justify-around items-start; ${plants == 2 ? 'flex-row-reverse' : ''}`}
+      id="extras">
+      {#if laundry}
+        {#if laundry === 1}
+          <img
+            width={size * 1.2 + 'px'}
+            height={size * 1.8 + 'px'}
+            alt=""
+            src="../../../img/laundry_01.png" />
+        {:else if laundry === 2}
+          <img
+            width={size * 1.2 + 'px'}
+            height={size * 1.8 + 'px'}
+            alt=""
+            src="../../../img/laundry_01.png" />
+        {/if}
       {/if}
-    {/if}
-    {#if plants}
-      {#if plants === 1}
-        <img
-          width={size * 1.2 + 'px'}
-          height={size * 1.8 + 'px'}
-          alt=""
-          src="../../../img/plant_01.png" />
-      {:else if plants === 2}
-        <img
-          width={size * 1.2 + 'px'}
-          height={size * 1.8 + 'px'}
-          alt=""
-          src="../../../img/plant_01.png" />
+      {#if plants}
+        {#if plants === 1}
+          <img
+            width={size * 1.2 + 'px'}
+            height={size * 1.8 + 'px'}
+            alt=""
+            src="../../../img/plant_01.png" />
+        {:else if plants === 2}
+          <img
+            width={size * 1.2 + 'px'}
+            height={size * 1.8 + 'px'}
+            alt=""
+            src="../../../img/plant_01.png" />
+        {/if}
       {/if}
-    {/if}
-  </div>
+    </div>
 
-  <div
-    id="machine"
-    class:glow={withdrawing}
-    class="flex flex-column w-100 h-100 justify-between items-center">
-    {#if background}
-      <div
-        id="panel"
-        class="w-100 flex justify-around items-center"
-        style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}>
-        <div class="flex items-center justify-between w-25 h-100">
-          <div id="dial" class="flex justify-center items-center">
-            <div />
+    <div
+      id="machine"
+      class:glow={withdrawing}
+      class="flex flex-column w-100 h-100 justify-between items-center">
+      {#if background}
+        <div
+          id="panel"
+          class="w-100 flex justify-around items-center"
+          style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}>
+          <div class="flex items-center justify-between w-25 h-100">
+            <div id="dial" class="flex justify-center items-center">
+              <div />
+            </div>
+            <div id="dial" class="flex justify-center items-center">
+              <div />
+            </div>
           </div>
-          <div id="dial" class="flex justify-center items-center">
-            <div />
-          </div>
-        </div>
-        <div class="flex items-center justify-between w-25 h-100">
-          <div id="button" class="flex items-center justify-center">
-            <div />
-          </div>
-          <div id="button" class="flex items-center justify-center">
-            <div />
-          </div>
-          <div id="button" class="flex items-center justify-center">
-            <div />
-          </div>
-        </div>
-      </div>
-      <div
-        style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}
-        id="door"
-        class:greenglow={commitment && !tx}
-        class="flex items-center justify-center">
-        <div class="flex items-center justify-center">
-          <div
-            on:click={async () => {
-              if (commitment) {
-                withdrawing = true;
-                await withdraw();
-                withdrawing = false;
-              } else {
-                tx = true;
-                tx = await deposit(index);
-                await tx.wait();
-                tx = null;
-              }
-            }}
-            class="{commitment && tx ? 'munny' : ''} flex items-center
-            justify-center f2">
-            {#if commitment && !tx}💰{:else if tx}💸{:else}🧼{/if}
+          <div class="flex items-center justify-between w-25 h-100">
+            <div id="button" class="flex items-center justify-center">
+              <div />
+            </div>
+            <div id="button" class="flex items-center justify-center">
+              <div />
+            </div>
+            <div id="button" class="flex items-center justify-center">
+              <div />
+            </div>
           </div>
         </div>
-      </div>
-      <div />
-    {/if}
-  </div>
+        <div
+          style={background.length > 9 ? `background: url('${background}')` : `background: ${background};`}
+          id="door"
+          class:greenglow={commitment && !tx}
+          class="flex items-center justify-center">
+          <div class="flex items-center justify-center">
+            <div
+              on:click={async () => {
+                if (commitment) {
+                  withdrawing = true;
+                  await withdraw();
+                  withdrawing = false;
+                } else {
+                  tx = true;
+                  tx = await deposit(index);
+                  await tx.wait();
+                  tx = null;
+                }
+              }}
+              class="{commitment && tx ? 'munny' : ''} flex items-center
+              justify-center f2">
+              {#if commitment && !tx}💰{:else if tx}💸{:else}🧼{/if}
+            </div>
+          </div>
+        </div>
+        <div />
+      {/if}
+    </div>
 
-</div>
+  </div>
 {/if}

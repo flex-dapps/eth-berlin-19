@@ -1,22 +1,22 @@
 <script>
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
-  import {takeLaundryHome} from '../../stores/wallet.js';
+  import { takeLaundryHome } from "../../stores/wallet.js";
   import WashingMachine from "../WashingMachine";
   import { navigate } from "svelte-routing";
-  import low from 'lowdb'
-  import LocalStorage from 'lowdb/adapters/LocalStorage'
-  const adapter = new LocalStorage('db')
-  const db = low(adapter)
-    let machines = db.get('commitments').value()
-  console.log(machines)
+  import low from "lowdb";
+  import LocalStorage from "lowdb/adapters/LocalStorage";
+  const adapter = new LocalStorage("db");
+  const db = low(adapter);
+  let machines = db.get("commitments").value();
+  console.log(machines);
 
   import ethers from "ethers";
 
   let showSendModal = false;
-  let withdrawAddress = ''
-  let latestWithdraw = ''
-  let withdrawError = null
+  let withdrawAddress = "";
+  let latestWithdraw = "";
+  let withdrawError = null;
   export let commitments;
   export let deposit;
   export let withdrawIndex;
@@ -25,18 +25,18 @@
   export let proxyBalance = 0;
 
   const clickGo = async () => {
-    withdrawError = null
+    withdrawError = null;
     try {
-      const tx = await takeLaundryHome(withdrawAddress)
-      latestWithdraw = tx.hash
+      const tx = await takeLaundryHome(withdrawAddress);
+      latestWithdraw = tx.hash;
     } catch (error) {
-      withdrawError = error.message
+      withdrawError = error.message;
     }
   };
 </script>
 
 <style>
-.backbutton {
+  .backbutton {
     background: #ffc555;
     border-radius: 0.2rem;
     font-family: "VT323", monospace;
@@ -169,10 +169,13 @@
   }
 </style>
 
-<div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
+<div
+  id="myloads"
+  class="body html flex flex-column items-center w-100 h-100"
+  in:fade>
   {#if showSendModal}
     <div
-      transition:fade="{{duration: 200}}"
+      transition:fade={{ duration: 200 }}
       class="flex flex-column absolute dark-fade items-center justify-around
       h-100 w-100 z-5">
       <div class="tc flex flex-column items-center justify-center w-80">
@@ -183,7 +186,9 @@
           <div>{withdrawError}</div>
         {/if}
         {#if latestWithdraw}
-          <a target="_blank" href="https://etherscan.com/tx/{latestWithdraw}">{latestWithdraw}</a>
+          <a target="_blank" href="https://etherscan.com/tx/{latestWithdraw}">
+            {latestWithdraw}
+          </a>
         {/if}
       </div>
       <div class="pa3 backbutton" on:click={() => (showSendModal = false)}>
@@ -204,24 +209,33 @@
     <div class="flex flex-column items-end">
       <div class="title f2">Loads 💦</div>
       <div class="current-reward">
-        Reward: ~{Number(ethers.utils.formatEther(balance) / 20).toFixed(2)} ETH
+        Reward: ~{Number(ethers.utils.formatEther(proxyBalance) / 20).toFixed(2)}
+        ETH
       </div>
     </div>
   </div>
   <div class="grid flex flex-row w-100">
-    {#each machines as machine, i}
+    {#each Array(10) as machine, i}
       <div class="washer flex flex-row">
         <WashingMachine
           size={15}
-          commitment={machine}
-           deposit={() => deposit(i)}
-          withdraw={() => withdrawIndex(i)}/>
+          commitment={commitments && commitments[i] ? commitments[i] : null}
+          deposit={() => deposit(i)}
+          withdraw={() => withdrawIndex(i)} />
       </div>
     {/each}
   </div>
-<div class='fixed w-100 bottom-2 justify-center flex'>
-  <div on:click={() => navigate('/')} class="backbutton flex justify-center items-center pa3 br3 ma3" >Back</div>
-  <div on:click={() => (showSendModal = true)} class="pa3 br3 ma3 flex items-center withdraw">Send</div>
+  <div class="fixed w-100 bottom-2 justify-center flex">
+    <div
+      on:click={() => navigate('/')}
+      class="backbutton flex justify-center items-center pa3 br3 ma3">
+      Back
+    </div>
+    <div
+      on:click={() => (showSendModal = true)}
+      class="pa3 br3 ma3 flex items-center withdraw">
+      Send
+    </div>
   </div>
 </div>
 

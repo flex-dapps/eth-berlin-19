@@ -15,13 +15,13 @@
   export let cleanBalance;
 
   let addressModal = false;
-  let copied = false
+  let copied = false;
 
   let qrCode = writable();
 
   function openAddressModal() {
     console.log(cleanAddress);
-    QRCode.toDataURL(cleanAddress, (err, url) => {
+    QRCode.toDataURL(address, (err, url) => {
       console.log(url);
       qrCode.set(url);
     });
@@ -92,7 +92,7 @@
   }
 
   #washzone {
-     max-width: 60vh;
+    max-width: 60vh;
   }
 
   #plant {
@@ -134,7 +134,7 @@
 <div id="screenOverlay" class="flex flex-column justify-between items-center">
   {#if addressModal}
     <div
-      transition:fade="{{duration: 200}}"
+      transition:fade={{ duration: 200 }}
       class="flex flex-column absolute dark-fade items-center justify-around
       h-100 w-100 z-5">
       <div class="flex flex-column items-center justify-center">
@@ -144,12 +144,11 @@
           class="w-75"
           on:click={() => {
             copy(address);
-            copied = true
+            copied = true;
           }} />
         <div class="pa2 f3 gtext">Send ETH here, tap QR to copy address</div>
         {#if copied}
-        <div class='pa2 f3 gtext'>Copied to clipboard 👍</div>
-    
+          <div class="pa2 f3 gtext">Copied to clipboard 👍</div>
         {/if}
 
       </div>
@@ -170,7 +169,7 @@
     </button>
   </div>
 
-  <div class="pa3" id='washzone'>
+  <div class="pa3" id="washzone">
     <div class="flex justify-center items-end mb5 pr5">
       <img
         class="w-50 pb4"

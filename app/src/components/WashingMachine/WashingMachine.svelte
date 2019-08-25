@@ -33,6 +33,8 @@
 </script>
 
 <style>
+
+
   #machine {
     border: 1px solid #00000050;
     border-radius: 0.5rem;
@@ -105,6 +107,7 @@
   #extras {
     margin-bottom: -5px;
     z-index: 3;
+    max-height: 4rem;
   }
 
   #extras img {
@@ -170,27 +173,16 @@
     id="extras">
     {#if laundry}
       {#if laundry === 1}
-        <img
-          width={size * 1.2 + 'px'}
-          alt=""
-          src="../../../img/laundry_01.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
       {:else if laundry === 2}
-        <img
-          width={size * 1.2 + 'px'}
-          alt=""
-          src="../../../img/laundry_01.png" />
-        <img
-          width={size * 1.2 + 'px'}
-          alt=""
-          src="../../../img/laundry_02.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
       {/if}
     {/if}
     {#if plants}
       {#if plants === 1}
-        <img width={size * 1.2 + 'px'} alt="" src="../../../img/plant_01.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
       {:else if plants === 2}
-        <img width={size * 1.2 + 'px'} alt="" src="../../../img/plant_01.png" />
-        <img width={size * 1.2 + 'px'} alt="" src="../../../img/plant_02.png" />
+        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
       {/if}
     {/if}
   </div>

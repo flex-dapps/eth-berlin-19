@@ -1,19 +1,44 @@
 <script>
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
+  import {takeLaundryHome} from '../../stores/wallet.js';
   import WashingMachine from "../WashingMachine";
+  import { navigate } from "svelte-routing";
 
   import ethers from "ethers";
 
+  let showSendModal = false;
+  let withdrawAddress = ''
+  let latestWithdraw = ''
+  let withdrawError = null
   export let commitments;
   export let deposit;
   export let withdrawIndex;
   export let balance = 0;
   export let cleanBalance = 0;
   export let proxyBalance = 0;
+
+  const clickGo = async () => {
+    withdrawError = null
+    try {
+      const tx = await takeLaundryHome(withdrawAddress)
+      latestWithdraw = tx.hash
+    } catch (error) {
+      withdrawError = error.message
+    }
+  }
 </script>
 
 <style>
+.backbutton {
+    background: #ffc555;
+    border-radius: 0.2rem;
+    font-family: "VT323", monospace;
+    font-size: 1.5rem;
+    color: #eb5757;
+    border: 2px solid #eb5757;
+  }
+
   section::after {
     content: "";
     background: url("../../../img/wallpaper_03.png");
@@ -71,6 +96,24 @@
 
   .withdraw {
     background: lightgreen;
+    border-radius: 0.2rem;
+    font-family: "VT323", monospace;
+    font-size: 1.5rem;
+    color: darkgreen;
+    border: 2px solid darkgreen;
+  }
+
+  .dark-fade {
+    background: #000000bb;
+    color: white;
+  }
+
+  .close-modal {
+    background: red;
+  }
+
+  .go {
+    background: palevioletred;
   }
 
   .current-reward {
@@ -125,12 +168,30 @@
   }
 </style>
 
-<div
-  id="myloads"
-  class="body html flex flex-column items-center w-100 h-100"
-  in:fade>
+<div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
+  {#if showSendModal}
+    <div
+      class="flex flex-column absolute dark-fade items-center justify-around
+      h-100 w-100 z-5">
+      <div class="tc flex flex-column items-center justify-center w-80">
+        <h3>Claim your Squeaky™ Load</h3>
+        <input bind:value={withdrawAddress} />
+        <div on:click={clickGo} class="pa3 mt3 go">GO!</div>
+        {#if withdrawError}
+          <div>{withdrawError}</div>
+        {/if}
+        {#if latestWithdraw}
+          <a target="_blank" href="https://etherscan.com/tx/{latestWithdraw}">{latestWithdraw}</a>
+        {/if}
+      </div>
+      <div class="pa3 close-modal" on:click={() => (showSendModal = false)}>
+        Back to the suds
+      </div>
+    </div>
+  {/if}
   <div class="heading flex flex-row w-100 h-33 pb4 justify-around items-center">
     <div class="flex flex-column justify-start items-start f3">
+
       <div class="subHead w-100">
         Dirty Pennies: {Number(ethers.utils.formatEther(balance)).toFixed(2)}
       </div>
@@ -156,7 +217,10 @@
       </div>
     {/each}
   </div>
-  <div class="fixed bottom-2 right-2 pa3 br3 withdraw">Send</div>
+<div class='fixed w-100 bottom-2 justify-center flex'>
+  <div on:click={() => navigate('/')} class="backbutton flex justify-center items-center pa3 br3 ma3" >Back</div>
+  <div on:click={() => (showSendModal = true)} class="pa3 br3 ma3 flex items-center withdraw">Send</div>
+  </div>
 </div>
 
 <section

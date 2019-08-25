@@ -49,6 +49,10 @@
   :global(h2) {
     font-family: "Rammetto One", cursive;
   }
+
+  #app {
+    background: whitesmoke;
+  }
 </style>
 
 <svelte:head>
@@ -57,8 +61,7 @@
     href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
 
 </svelte:head>
-<div id="app" class="flex h-100 flex-column justify-start relative">
-  <div id="screen" class="h-100 w-100 overflow-hidden">
+<div id="app" class="flex h-100 w-100 justify-center relative">
     <Router>
       <Route path="myloads">
         <MyLoads
@@ -82,4 +85,3 @@
       </Route>
     </Router>
   </div>
-</div>

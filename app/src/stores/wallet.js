@@ -134,14 +134,14 @@ export async function withdraw(note) {
 
 export async function withdrawIndex(i) {
   const notes = db.get('notes').value()
-  const commitments = db.get('commitments').value()
+  const commits = db.get('commitments').value()
   const note = notes[i]
   if (note) await withdraw(note)
   notes[i] = undefined
-  commitments[i] = undefined
+  commits[i] = undefined
   db.set('notes', notes).write()
-  db.set('commitments', commitments).write()
-  commitments.set(commitments)
+  db.set('commitments', commits).write()
+  commitments.set(commits)
 }
 
 export async function hasEnoughEth() {

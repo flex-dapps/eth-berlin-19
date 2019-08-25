@@ -170,7 +170,11 @@ export async function withdrawIndex(i) {
   const notes = db.get('notes').value()
   const commits = db.get('commitments').value()
   const note = notes[i]
-  if (note) await withdraw(note)
+  try {
+    if (note) await withdraw(note)
+  } catch (error) {
+    console.error(`failed to withdraw note ${note}`)    
+  }
   notes[i] = undefined
   commits[i] = undefined
   db.set('notes', notes).write()

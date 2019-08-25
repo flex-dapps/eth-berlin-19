@@ -125,6 +125,7 @@
 <div id="screenOverlay" class="flex flex-column justify-between items-center">
   {#if addressModal}
     <div
+      transition:fade="{{duration: 200}}"
       class="flex flex-column absolute dark-fade items-center justify-around
       h-100 w-100 z-5">
       <div class="flex flex-column items-center justify-center">

@@ -103,9 +103,22 @@
     background: palevioletred;
   }
 
+  #myloads {
+    max-width: 60vh;
+    z-index: 2;
+  }
+
+  #wallpaper {
+    max-width: 60vh;
+    max-height: 100vh;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
 </style>
 
-<div class="body html flex flex-column items-center w-100 h-100" in:fade>
+<div id='myloads' class="body html flex flex-column items-center w-100 h-100" in:fade>
   {#if showSendModal}
     <div
       class="flex flex-column absolute dark-fade items-center justify-around
@@ -144,7 +157,7 @@
     {#each Array(10) as washer, i}
       <div class="washer flex flex-row">
         <WashingMachine
-          size={30}
+          size={15}
           commitment={commitments && commitments[i] ? commitments[i] : null}
           {deposit}
           {withdraw} />

@@ -74,17 +74,25 @@
     transform: rotate(-8.2deg);
   }
 
-  #screen {
+  #screenOverlay {
     position: fixed;
     width: 100%;
+    max-width: 60vh;
+    max-height: 100vh;
     height: 100%;
     z-index: 3;
   }
   #wallpaper {
+    max-width: 60vh;
+    max-height: 100vh;
     position: fixed;
     width: 100%;
     height: 100%;
     z-index: 1;
+  }
+
+  #washzone {
+     max-width: 60vh;
   }
 
   #plant {
@@ -114,7 +122,7 @@
   }
 </style>
 
-<div id="screen" class="flex flex-column justify-between items-center">
+<div id="screenOverlay" class="flex flex-column justify-between items-center">
   {#if addressModal}
     <div
       class="flex flex-column absolute dark-fade items-center justify-around
@@ -152,7 +160,7 @@
     </button>
   </div>
 
-  <div class="pa3">
+  <div class="pa3" id='washzone'>
     <div class="flex justify-center items-end mb5 pr5">
       <img
         class="w-50 pb4"
@@ -160,7 +168,7 @@
         src="../../../img/plant_02.png"
         alt="plant" />
       <div class="z2 washer flex justify-center items-end">
-        <WashingMachine size={45} />
+        <WashingMachine size={26} />
       </div>
     </div>
     <div class="w-100 flex justify-center mt2">

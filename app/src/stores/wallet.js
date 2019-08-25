@@ -102,14 +102,16 @@ export async function takeLaundryHome(home) {
     return tx
 }
 
-export async function deposit() {
+export async function deposit(i) {
   const { commitment, note } = window.tornado.deposit()
-  db.get('commitments')
-    .push({ commitment, timestamp: Math.floor(Date.now() / 1000) })
-    .write()
-  db.get('notes')
-    .push(note)
-    .write()
+  const commits = db.get('commitments').value()
+  const notes = db.get('notes').value()
+
+  commits[i] = { commitment, timestamp: Math.floor(Date.now() / 1000) }
+  notes[i] = note
+
+  db.set('commitments', commits).write()
+  db.set('notes', notes).write()
 
   commitments.set(db.get('commitments').value())
 

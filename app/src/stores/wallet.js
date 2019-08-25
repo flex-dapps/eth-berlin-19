@@ -19,6 +19,7 @@ let balance = writable()
 let cleanAddress = writable()
 let cleanBalance = writable()
 let commitments = writable()
+let proxyBalance = writable()
 
 export default {
   addBounty,
@@ -29,8 +30,10 @@ export default {
   cleanAddress,
   cleanBalance,
   withdrawAll,
+  withdrawIndex,
   balance,
-  commitments
+  commitments,
+  proxyBalance
 }
 
 let tornadoAddress
@@ -51,6 +54,20 @@ export async function init(_tornadoAddress, _proxyAddress) {
   commitments.set(db.get('commitments').value())
   balance.set(await dirtyWallet.getBalance())
   cleanBalance.set(await cleanWallet.getBalance())
+  proxyBalance.set(await provider.getBalance(proxyAddress))
+
+  provider.on(dirtyWallet.address, _bal => {
+    balance.set(_bal)
+  })
+
+  provider.on(cleanWallet.address, _bal => {
+    cleanBalance.set(_bal)
+  })
+
+  provider.on(proxyAddress, _bal => {
+    proxyBalance.set(_bal)
+  })
+
   await window.tornado.init(false)
 }
 
@@ -85,18 +102,22 @@ export async function takeLaundryHome(home) {
     return tx
 }
 
-export async function deposit() {
+export async function deposit(i) {
   const { commitment, note } = window.tornado.deposit()
-  db.get('commitments')
-    .push({ commitment, timestamp: Math.floor(Date.now() / 1000) })
-    .write()
-  db.get('notes')
-    .push(note)
-    .write()
+  const commits = db.get('commitments').value()
+  const notes = db.get('notes').value()
+
+  commits[i] = { commitment, timestamp: Math.floor(Date.now() / 1000) }
+  notes[i] = note
+
+  db.set('commitments', commits).write()
+  db.set('notes', notes).write()
 
   commitments.set(db.get('commitments').value())
 
-  console.log({ commitment, note })
+  const nonce = await dirtyWallet.getTransactionCount('pending')
+
+  console.log({ commitment, note, nonce })
   // call deposit on mixer with commitment as param 1 (with 0.1 eth)
   const contract = new ethers.Contract(
     tornadoAddress,
@@ -105,7 +126,8 @@ export async function deposit() {
   )
   let actualContract = contract.connect(dirtyWallet)
   const tx = await actualContract.deposit(commitment, {
-    value: ethers.utils.parseEther('0.1')
+    value: ethers.utils.parseEther('0.1'),
+    nonce
   })
   return tx
 }
@@ -144,6 +166,22 @@ export async function withdraw(note) {
   })).json()
   console.log({ res })
   return res.tx
+}
+
+export async function withdrawIndex(i) {
+  const notes = db.get('notes').value()
+  const commits = db.get('commitments').value()
+  const note = notes[i]
+  try {
+    if (note) await withdraw(note)
+  } catch (error) {
+    console.error(`failed to withdraw note ${note}`)    
+  }
+  notes[i] = undefined
+  commits[i] = undefined
+  db.set('notes', notes).write()
+  db.set('commitments', commits).write()
+  commitments.set(commits)
 }
 
 export async function hasEnoughEth() {

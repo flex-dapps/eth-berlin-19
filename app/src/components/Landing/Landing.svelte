@@ -106,6 +106,10 @@
     margin: 0.5rem;
   }
 
+  .gtext {
+    font-family: "VT323", monospace;
+  }
+
   h5 {
     font-family: "VT323", monospace;
     font-size: 2rem;
@@ -117,14 +121,20 @@
     color: white;
   }
 
-  .close-modal {
-    background: red;
+  .backbutton {
+    background: #ffc555;
+    border-radius: 0.2rem;
+    font-family: "VT323", monospace;
+    font-size: 1.5rem;
+    color: #eb5757;
+    border: 2px solid #eb5757;
   }
 </style>
 
 <div id="screenOverlay" class="flex flex-column justify-between items-center">
   {#if addressModal}
     <div
+      transition:fade="{{duration: 200}}"
       class="flex flex-column absolute dark-fade items-center justify-around
       h-100 w-100 z-5">
       <div class="flex flex-column items-center justify-center">
@@ -136,14 +146,14 @@
             copy(address);
             copied = true
           }} />
-        <div class="pa2">Send ETH here, tap QR to copy address</div>
+        <div class="pa2 f3 gtext">Send ETH here, tap QR to copy address</div>
         {#if copied}
-        <div class='pa2 f3'>Copied to clipboard 👍</div>
+        <div class='pa2 f3 gtext'>Copied to clipboard 👍</div>
     
         {/if}
 
       </div>
-      <div class="pa3 close-modal" on:click={() => (addressModal = false)}>
+      <div class="pa3 backbutton" on:click={() => (addressModal = false)}>
         Back to the suds
       </div>
     </div>

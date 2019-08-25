@@ -4,6 +4,12 @@
   import {takeLaundryHome} from '../../stores/wallet.js';
   import WashingMachine from "../WashingMachine";
   import { navigate } from "svelte-routing";
+  import low from 'lowdb'
+  import LocalStorage from 'lowdb/adapters/LocalStorage'
+  const adapter = new LocalStorage('db')
+  const db = low(adapter)
+    let machines = db.get('commitments').value()
+  console.log(machines)
 
   import ethers from "ethers";
 
@@ -170,11 +176,11 @@
     </div>
   </div>
   <div class="grid flex flex-row w-100">
-    {#each Array(10) as washer, i}
+    {#each machines as machine, i}
       <div class="washer flex flex-row">
         <WashingMachine
           size={15}
-          commitment={commitments && commitments[i] ? commitments[i] : null}
+          commitment={machine}
           {deposit}
           {withdraw} />
       </div>

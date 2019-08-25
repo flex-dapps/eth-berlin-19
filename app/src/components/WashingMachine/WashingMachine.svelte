@@ -1,35 +1,27 @@
 <script>
   import { onMount } from "svelte";
   import { fade, slide, crossfade } from "svelte/transition";
+  
+    export let deposit;
+    export let withdraw;
+    export let commitment;
+    let withdrawing;
+    let tx;
 
+  let seed = commitment ? commitment.timestamp : 1234
+  console.log(seed % 3)
+  console.log(seed)
   export let size = 50;
   const rand = (x = 2) => {
     return Math.round(Math.random() * x);
   };
-  let plants = rand(2);
-  let laundry = rand(2);
-  let backgrounds = {
-    colours: ["#5d526d", "#7dac7d", "#b3e876", "#fff66d", "#fff66d"],
-    images: [
-      "../../../img/wallpaper_04.jpg",
-      "../../../img/wallpaper_05.jpg",
-      "../../../img/wallpaper_03.png",
-      "../../../img/wallpaper_02.gif",
-      "../../../img/wallpaper_01.gif"
-    ]
-  };
+  let plants = seed % 3;
+  let laundry = seed % 3;
+  let backgrounds = ["#5d526d", "#7dac7d", "#b3e876", "#fff66d", "#fff66d"]
+  let index = (seed % backgrounds.length+1)
+  let background = backgrounds[seed % backgrounds.length];
 
-  let backgroundType = backgrounds[Object.keys(backgrounds)[rand(1)]];
-  console.log(backgroundType)
-  let background =
-    backgroundType[Math.floor(Math.random() * Object.keys(backgrounds).length)];
-console.log(background)
 
-  export let deposit;
-  export let withdraw;
-  export let commitment;
-  let withdrawing;
-  let tx;
 </script>
 
 <style>
@@ -151,7 +143,7 @@ console.log(background)
   }
 </style>
 
-<!-- Make responsive -->
+{#if seed}
 <div
   class:rumble={tx}
   style="{`width: ${size}vh; height: ${size * 1.2}vh;`}in:fade">
@@ -232,3 +224,4 @@ console.log(background)
   </div>
 
 </div>
+{/if}

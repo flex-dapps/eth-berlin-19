@@ -11,7 +11,7 @@ const websnarkUtils = require('websnark/src/utils')
 const Web3 = require('web3')
 
 const web3Kovan = new Web3('https://kovan.infura.io/v3/2ccd2283fefa418d8d1a25e7235ec647')
-const web3Main = new Web3('https://infura.io/v3/2ccd2283fefa418d8d1a25e7235ec647')
+const web3Main = new Web3('https://mainnet.infura.io/v3/2ccd2283fefa418d8d1a25e7235ec647')
 
 let mixer, circuit, proving_key, groth16, web3
 let MERKLE_TREE_HEIGHT, EMPTY_ELEMENT
@@ -114,8 +114,10 @@ async function init(main) {
   EMPTY_ELEMENT = 1
   groth16 = await buildGroth16()
   let netId = await web3.eth.net.getId()
+  console.log({ netId })
+  console.log(contractJson.networks)
   const tx = await web3.eth.getTransaction(
-    contractJson.networks[netId].transactionHash
+    contractJson.networks[netId.toString()].transactionHash
   )
   mixer = new web3.eth.Contract(
     contractJson.abi,

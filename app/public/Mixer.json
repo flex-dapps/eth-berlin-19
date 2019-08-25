@@ -8300,6 +8300,10 @@
     "42": {
       "address": "0x1Cea940cA15a303A0E01B7F8589F39fF34308DB2",
       "transactionHash": "0xdb055df1577f7339565127f856e1b8573378a01067676eb72b79bc11113b1705"
+    },
+    "1": {
+      "address": "0x94A1B5CdB22c43faab4AbEb5c74999895464Ddaf",
+      "transactionHash": "0x9c59cb31e7f080aa2e457ec160b5f54d436f8dbf3c776e9849ae8baa1c68d561"
     }
   },
   "schemaVersion": "3.0.11",

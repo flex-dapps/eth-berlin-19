@@ -19,6 +19,7 @@ let balance = writable()
 let cleanAddress = writable()
 let cleanBalance = writable()
 let commitments = writable()
+let proxyBalance = writable()
 
 export default {
   addBounty,
@@ -29,8 +30,10 @@ export default {
   cleanAddress,
   cleanBalance,
   withdrawAll,
+  withdrawIndex,
   balance,
-  commitments
+  commitments,
+  proxyBalance
 }
 
 let tornadoAddress
@@ -51,6 +54,20 @@ export async function init(_tornadoAddress, _proxyAddress) {
   commitments.set(db.get('commitments').value())
   balance.set(await dirtyWallet.getBalance())
   cleanBalance.set(await cleanWallet.getBalance())
+  proxyBalance.set(await provider.getBalance(proxyAddress))
+
+  provider.on(dirtyWallet.address, _bal => {
+    balance.set(_bal)
+  })
+
+  provider.on(cleanWallet.address, _bal => {
+    cleanBalance.set(_bal)
+  })
+
+  provider.on(proxyAddress, _bal => {
+    proxyBalance.set(_bal)
+  })
+
   await window.tornado.init(false)
 }
 
@@ -147,6 +164,18 @@ export async function withdraw(note) {
   })).json()
   console.log({ res })
   return res.tx
+}
+
+export async function withdrawIndex(i) {
+  const notes = db.get('notes').value()
+  const commits = db.get('commitments').value()
+  const note = notes[i]
+  if (note) await withdraw(note)
+  notes[i] = undefined
+  commits[i] = undefined
+  db.set('notes', notes).write()
+  db.set('commitments', commits).write()
+  commitments.set(commits)
 }
 
 export async function hasEnoughEth() {

@@ -13,22 +13,20 @@
   let withdrawError = null
   export let commitments;
   export let deposit;
-  export let withdraw;
+  export let withdrawIndex;
   export let balance = 0;
   export let cleanBalance = 0;
+  export let proxyBalance = 0;
 
   const clickGo = async () => {
     withdrawError = null
     try {
       const tx = await takeLaundryHome(withdrawAddress)
-      latestWithdraw = tx.hash 
+      latestWithdraw = tx.hash
     } catch (error) {
-      withdrawError = error.message  
+      withdrawError = error.message
     }
   }
-
-
-  console.log("blah", balance);
 </script>
 
 <style>
@@ -40,7 +38,7 @@
     color: #eb5757;
     border: 2px solid #eb5757;
   }
-  
+
   section::after {
     content: "";
     background: url("../../../img/wallpaper_03.png");
@@ -118,11 +116,48 @@
     background: palevioletred;
   }
 
+  .current-reward {
+    animation: rainbow 5s infinite;
+  }
+  @keyframes rainbow {
+    0% {
+      color: orange;
+    }
+    10% {
+      color: purple;
+    }
+    20% {
+      color: red;
+    }
+    30% {
+      color: CadetBlue;
+    }
+    40% {
+      color: yellow;
+    }
+    50% {
+      color: coral;
+    }
+    60% {
+      color: green;
+    }
+    70% {
+      color: cyan;
+    }
+    80% {
+      color: DeepPink;
+    }
+    90% {
+      color: DodgerBlue;
+    }
+    100% {
+      color: orange;
+    }
+  }
   #myloads {
     max-width: 60vh;
     z-index: 2;
   }
-
   #wallpaper {
     max-width: 60vh;
     max-height: 100vh;
@@ -155,10 +190,9 @@
       </div>
     </div>
   {/if}
-
   <div class="heading flex flex-row w-100 h-33 pb4 justify-around items-center">
     <div class="flex flex-column justify-start items-start f3">
-    
+
       <div class="subHead w-100">
         Dirty Pennies: {Number(ethers.utils.formatEther(balance)).toFixed(2)}
       </div>
@@ -166,8 +200,11 @@
         Clean Coppers: {Number(ethers.utils.formatEther(cleanBalance)).toFixed(2)}
       </div>
     </div>
-    <div class="flex justify-end">
+    <div class="flex flex-column items-end">
       <div class="title f2">Loads 💦</div>
+      <div class="current-reward">
+        Reward: ~{Number(ethers.utils.formatEther(balance) / 20).toFixed(2)} ETH
+      </div>
     </div>
   </div>
   <div class="grid flex flex-row w-100">
@@ -177,7 +214,7 @@
           size={15}
           commitment={commitments && commitments[i] ? commitments[i] : null}
           {deposit}
-          {withdraw} />
+          withdraw={() => withdrawIndex(i)} />
       </div>
     {/each}
   </div>

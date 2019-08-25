@@ -20,10 +20,10 @@
   };
 
   let backgroundType = backgrounds[Object.keys(backgrounds)[rand(1)]];
-  console.log(backgroundType)
+  console.log(backgroundType);
   let background =
     backgroundType[Math.floor(Math.random() * Object.keys(backgrounds).length)];
-console.log(background)
+  console.log(background);
 
   export let deposit;
   export let withdraw;
@@ -121,6 +121,19 @@ console.log(background)
     animation: rumbling 0.2s infinite;
   }
 
+  .glow {
+    animation: glowing 3s infinite alternate;
+  }
+
+  @keyframes glowing {
+    from {
+      box-shadow: 10px 10px 50px #ff0000aa;
+    }
+    to {
+      box-shadow: 1px 1px 1px #ff0000aa;
+    }
+  }
+
   @keyframes spin {
     from {
       transform: rotate(0deg);
@@ -163,7 +176,6 @@ console.log(background)
         <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
       {:else if laundry === 2}
         <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_01.png" />
-        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/laundry_02.png" />
       {/if}
     {/if}
     {#if plants}
@@ -171,13 +183,13 @@ console.log(background)
         <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
       {:else if plants === 2}
         <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_01.png" />
-        <img width={size*1.2 + 'px'} height={size*1.8 + 'px'} alt="" src="../../../img/plant_02.png" />
       {/if}
     {/if}
   </div>
 
   <div
     id="machine"
+    class:glow={withdrawing}
     class="flex flex-column w-100 h-100 justify-between items-center">
     {#if background}
       <div
@@ -213,7 +225,8 @@ console.log(background)
             on:click={async () => {
               if (commitment) {
                 withdrawing = true;
-                withdraw();
+                await withdraw();
+                withdrawing = false;
               } else {
                 tx = true;
                 tx = await deposit();
